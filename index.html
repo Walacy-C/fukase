@@ -14,6 +14,10 @@
             --bg-pastel: #fffafb;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-pastel);
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -55,88 +59,86 @@
             transition: all 0.3s ease;
         }
 
-        /* Modal */
-        #modal-terms {
+        /* Modais e Transições de Seção */
+        #modal-terms, .content-section {
             display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
+            transition: all 0.5s ease;
         }
 
-        #modal-terms.active {
+        #modal-terms.active, .content-section.active {
             display: flex;
+            animation: slideUp 0.5s ease-out;
         }
 
-        /* Player Flutuante Melhorado */
-        .music-player-fab {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 99;
-            background: var(--baby-red);
-            color: white;
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(248, 113, 113, 0.5);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 3px solid white;
+        #main-content.hidden {
+            display: none;
         }
 
-        .music-player-fab:active {
-            transform: scale(0.9);
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .music-player-fab.playing {
-            animation: pulse-red 1.5s infinite;
-            background: var(--baby-red-dark);
-        }
-
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.7); transform: scale(1); }
-            70% { box-shadow: 0 0 0 15px rgba(248, 113, 113, 0); transform: scale(1.05); }
-            100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0); transform: scale(1); }
-        }
-
-        /* Esconder o iframe mas manter funcional */
-        #player-wrapper {
+        /* Menu Flutuante */
+        #floating-menu {
+            display: none;
             position: absolute;
-            top: -9999px;
-            left: -9999px;
-            visibility: hidden;
+            top: 70px;
+            right: 24px;
+            width: 250px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(248, 113, 113, 0.1);
+            z-index: 100;
+            overflow: hidden;
+            transform-origin: top right;
+        }
+
+        #floating-menu.active {
+            display: block;
+            animation: menuScale 0.2s ease-out;
+        }
+
+        @keyframes menuScale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .section-container {
+            min-height: 80vh;
+            padding-top: 120px;
+            padding-bottom: 60px;
+        }
+
+        /* Estilo para o Círculo do Criador */
+        .avatar-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--baby-red-light);
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 10px 25px rgba(248, 113, 113, 0.2);
+        }
+
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Container do Player YouTube -->
-    <div id="player-wrapper">
-        <div id="youtube-audio-player"></div>
-    </div>
-
-    <!-- Botão Flutuante -->
-    <div id="music-fab" class="music-player-fab" onclick="toggleMusic()">
-        <svg id="play-icon" class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
-        </svg>
-        <svg id="pause-icon" class="w-8 h-8 hidden" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-        </svg>
-    </div>
-
     <!-- Navegação -->
     <nav class="fixed w-full z-50 glass-header py-4 px-6">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
+        <div class="container mx-auto flex justify-between items-center relative">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showMain()">
                 <div class="w-10 h-10 bg-baby-red rounded-xl flex items-center justify-center shadow-lg shadow-red-200">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -146,90 +148,171 @@
             </div>
             
             <div class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-tighter text-gray-600">
-                <a href="#home" class="hover:text-baby-red transition">Início</a>
-                <a href="#planos" class="hover:text-baby-red transition">Planos</a>
+                <button onclick="showMain()" class="hover:text-baby-red transition uppercase">Início</button>
+                <a href="#planos" onclick="showMain()" class="hover:text-baby-red transition">Planos</a>
                 <button onclick="toggleModal()" class="hover:text-baby-red transition uppercase">Termos</button>
             </div>
 
-            <a href="https://wa.me/559191772809" target="_blank" class="bg-gray-900 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-baby-red transition-colors">
-                Contato
-            </a>
+            <div class="flex items-center gap-2">
+                <a href="https://wa.me/559191772809" target="_blank" class="bg-gray-900 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-baby-red transition-colors">
+                    Contato
+                </a>
+                
+                <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center bg-white border border-gray-100 rounded-lg shadow-sm text-gray-600 hover:text-baby-red transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+
+                <div id="floating-menu">
+                    <div class="p-2">
+                        <button onclick="showSection('creator')" class="w-full text-left px-4 py-3 hover:bg-red-50 rounded-xl transition-colors flex items-center gap-3">
+                            <span class="text-lg">👨🏻‍💻</span>
+                            <span class="text-sm font-bold text-gray-700">Info do Criador</span>
+                        </button>
+                        <button onclick="showSection('hosting')" class="w-full text-left px-4 py-3 hover:bg-red-50 rounded-xl transition-colors flex items-center gap-3">
+                            <span class="text-lg">☁️</span>
+                            <span class="text-sm font-bold text-gray-700">Hospedagens</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section id="home" class="pt-40 pb-20 px-6">
-        <div class="container mx-auto text-center max-w-4xl">
-            <span class="inline-block py-1 px-4 rounded-full bg-red-100 text-baby-red text-xs font-bold uppercase mb-6">A Melhor Store de Bots e Serviços</span>
-            <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
-                Eleve o seu nível com a <span class="text-baby-red">RICK SHOP</span>
-            </h1>
-            <p class="text-gray-500 text-lg mb-10 max-w-2xl mx-auto">
-                Acesso exclusivo aos melhores planos do Fukase e arquivos oficiais. Clique num plano abaixo para falar diretamente com o <b>Walacy</b>.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#planos" class="bg-baby-red text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-red-200 hover:scale-105 transition-transform">
-                    Ver Planos
-                </a>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main id="main-content">
+        <section id="home" class="pt-40 pb-20 px-6">
+            <div class="container mx-auto text-center max-w-4xl">
+                <span class="inline-block py-1 px-4 rounded-full bg-red-100 text-baby-red text-xs font-bold uppercase mb-6">SITE OFICIAL DE VENDAS DO RICK</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
+                    ÓTIMOS PRODUTOS SÓ NA <span class="text-baby-red">RICK SHOP</span>
+                </h1>
+                <p class="text-gray-500 text-lg mb-10 max-w-2xl mx-auto">
+                    Todos os meus recursos de vendas estão disponíveis apenas neste <b>site</b>. 🤹🏻
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#planos" class="bg-baby-red text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-red-200 hover:scale-105 transition-transform">
+                        Ver Planos
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="planos" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-black text-gray-900 mb-2">Escolha o seu Acesso</h2>
+                    <div class="h-1.5 w-20 bg-baby-red mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="plan-card bg-white p-8 rounded-[32px] border-2 border-gray-50 flex flex-col h-full">
+                        <div class="mb-6">
+                            <span class="text-gray-400 font-bold text-sm uppercase">Plano Básico</span>
+                            <h3 class="text-2xl font-black text-gray-800">Plano Mensal</h3>
+                        </div>
+                        <div class="mb-8">
+                            <span class="text-4xl font-black text-gray-900">R$ 5</span>
+                            <span class="text-gray-400 font-medium">/mês</span>
+                        </div>
+                        <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20Mensal" target="_blank" class="btn-purchase bg-gray-50 text-gray-800 hover:bg-baby-red hover:text-white mt-auto">
+                            Assinar Mensal
+                        </a>
+                    </div>
+
+                    <div class="plan-card bg-white p-8 rounded-[32px] border-2 border-baby-red shadow-2xl shadow-red-100 flex flex-col h-full relative overflow-hidden">
+                        <div class="absolute top-0 right-0 badge-popular text-white text-[10px] font-bold px-8 py-2 rotate-45 translate-x-6 translate-y-2 uppercase">
+                            Popular
+                        </div>
+                        <div class="mb-6">
+                            <span class="text-baby-red font-bold text-sm uppercase">Melhor Valor</span>
+                            <h3 class="text-2xl font-black text-gray-800">Plano Permanente</h3>
+                        </div>
+                        <div class="mb-8">
+                            <span class="text-4xl font-black text-gray-900">R$ 25</span>
+                            <span class="text-gray-400 font-medium">/único</span>
+                        </div>
+                        <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20permanente" target="_blank" class="btn-purchase bg-baby-red text-white hover:bg-red-500 shadow-lg shadow-red-200 mt-auto">
+                            Obter Permanente
+                        </a>
+                    </div>
+
+                    <div class="plan-card bg-gray-900 p-8 rounded-[32px] flex flex-col h-full text-white">
+                        <div class="mb-6">
+                            <span class="text-red-400 font-bold text-sm uppercase">Arquivo Único</span>
+                            <h3 class="text-2xl font-black">Arquivo do Bot</h3>
+                        </div>
+                        <div class="mb-8">
+                            <span class="text-4xl font-black text-white">R$ 45</span>
+                            <span class="text-gray-500 font-medium">/full</span>
+                        </div>
+                        <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20comprar%20o%20arquivo%20do%20bot" target="_blank" class="btn-purchase bg-white text-gray-900 hover:bg-red-50 mt-auto">
+                            Comprar Arquivo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEÇÃO DO CRIADOR -->
+    <section id="section-creator" class="content-section section-container flex-col items-center px-6">
+        <div class="max-w-xl w-full bg-white p-10 rounded-[40px] shadow-2xl shadow-red-100 text-center">
+            <!-- Círculo para sua foto (Avatar) -->
+            <div class="avatar-circle">
+                <!-- Substitua o SRC abaixo pela sua URL de imagem -->
+                <img src="https://files.catbox.moe/4all41.jpg" alt="Walacy Rick">
+            </div>
+            
+            <h2 class="text-3xl font-black text-gray-900 mb-2">Walacy (Rick)</h2>
+            <p class="text-baby-red font-bold uppercase tracking-widest text-xs mb-8">Fundador da Rick Shop</p>
+            
+            <div class="text-gray-500 leading-relaxed space-y-4 text-md px-4">
+                <p>Especialista em desenvolvimento de Bots para WhatsApp e soluções Web automatizadas.</p>
+                <p>Foco total em fornecer ferramentas de alta qualidade para usuários que buscam otimização e tecnologia de ponta.</p>
+            </div>
+            
+            <div class="mt-10 flex flex-col gap-3">
+                <a href="https://wa.me/559191772809" target="_blank" class="bg-baby-red text-white py-4 rounded-2xl font-bold shadow-lg shadow-red-100 hover:bg-red-500 transition-all">Falar com Walacy</a>
+                <button onclick="showMain()" class="text-gray-400 font-bold text-sm uppercase tracking-tighter hover:text-gray-600 transition-all">Voltar ao Início</button>
             </div>
         </div>
     </section>
 
-    <!-- Planos -->
-    <section id="planos" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-black text-gray-900 mb-2">Escolha o seu Acesso</h2>
-                <div class="h-1.5 w-20 bg-baby-red mx-auto rounded-full"></div>
+    <!-- SEÇÃO DE HOSPEDAGEM -->
+    <section id="section-hosting" class="content-section section-container flex-col items-center px-6">
+        <div class="max-w-4xl w-full bg-white rounded-[40px] shadow-2xl shadow-red-100 overflow-hidden">
+            <!-- Imagem de atualização em andamento conforme solicitado -->
+            <div class="relative h-72 md:h-96 w-full">
+                <img src="https://files.catbox.moe/kpmoay.jpg" class="w-full h-full object-cover" alt="Bronxys Host Atualização">
+                <div class="absolute inset-0 bg-black/30 flex items-end p-8">
+                    <h2 class="text-4xl font-black text-white uppercase tracking-tighter">Bronxys <span class="text-blue-400">Host</span></h2>
+                </div>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <!-- Mensal -->
-                <div class="plan-card bg-white p-8 rounded-[32px] border-2 border-gray-50 flex flex-col h-full">
-                    <div class="mb-6">
-                        <span class="text-gray-400 font-bold text-sm uppercase">Fukase Access</span>
-                        <h3 class="text-2xl font-black text-gray-800">Plano Mensal</h3>
+            
+            <div class="p-10 text-center">
+                <div class="inline-block py-1 px-4 rounded-full bg-blue-50 text-blue-500 text-xs font-bold uppercase mb-4">Parceiro Oficial</div>
+                <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+                    Para meus projetos e vendas de alta performance, eu utilizo e recomendo a <b>BronxysHost.com</b>. Estabilidade, suporte de qualidade e o melhor ping para o seu Bot.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                    <div class="p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span class="block text-2xl mb-1 text-blue-500">⚡</span>
+                        <span class="font-bold text-gray-800 text-sm">Ultra Veloz</span>
                     </div>
-                    <div class="mb-8">
-                        <span class="text-4xl font-black text-gray-900">R$ 5</span>
-                        <span class="text-gray-400 font-medium">/mês</span>
+                    <div class="p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span class="block text-2xl mb-1 text-blue-500">🛡️</span>
+                        <span class="font-bold text-gray-800 text-sm">DDoS Protection</span>
                     </div>
-                    <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20Mensal" target="_blank" class="btn-purchase bg-gray-50 text-gray-800 hover:bg-baby-red hover:text-white mt-auto">
-                        Assinar Mensal
-                    </a>
+                    <div class="p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                        <span class="block text-2xl mb-1 text-blue-500">💸</span>
+                        <span class="font-bold text-gray-800 text-sm">Melhor Preço</span>
+                    </div>
                 </div>
-
-                <!-- Permanente -->
-                <div class="plan-card bg-white p-8 rounded-[32px] border-2 border-baby-red shadow-2xl shadow-red-100 flex flex-col h-full relative overflow-hidden">
-                    <div class="absolute top-0 right-0 badge-popular text-white text-[10px] font-bold px-8 py-2 rotate-45 translate-x-6 translate-y-2 uppercase">
-                        Popular
-                    </div>
-                    <div class="mb-6">
-                        <span class="text-baby-red font-bold text-sm uppercase">Melhor Valor</span>
-                        <h3 class="text-2xl font-black text-gray-800">Plano Permanente</h3>
-                    </div>
-                    <div class="mb-8">
-                        <span class="text-4xl font-black text-gray-900">R$ 25</span>
-                        <span class="text-gray-400 font-medium">/único</span>
-                    </div>
-                    <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20permanente" target="_blank" class="btn-purchase bg-baby-red text-white hover:bg-red-500 shadow-lg shadow-red-200 mt-auto">
-                        Obter Permanente
-                    </a>
-                </div>
-
-                <!-- Arquivo -->
-                <div class="plan-card bg-gray-900 p-8 rounded-[32px] flex flex-col h-full text-white">
-                    <div class="mb-6">
-                        <span class="text-red-400 font-bold text-sm uppercase">Source Code</span>
-                        <h3 class="text-2xl font-black">Arquivo do Bot</h3>
-                    </div>
-                    <div class="mb-8">
-                        <span class="text-4xl font-black text-white">R$ 45</span>
-                        <span class="text-gray-500 font-medium">/full</span>
-                    </div>
-                    <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20comprar%20o%20arquivo%20do%20bot" target="_blank" class="btn-purchase bg-white text-gray-900 hover:bg-red-50 mt-auto">
-                        Comprar Arquivo
-                    </a>
+                <div class="flex flex-col md:flex-row justify-center gap-4">
+                    <a href="https://bronxyshost.com" target="_blank" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-100">Visitar Bronxys Host</a>
+                    <button onclick="showMain()" class="bg-gray-100 text-gray-600 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-gray-200 transition-all">Voltar</button>
                 </div>
             </div>
         </div>
@@ -240,98 +323,64 @@
         <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="text-center md:text-left">
                 <span class="text-xl font-black uppercase tracking-tighter">RICK <span class="text-baby-red">SHOP</span></span>
-                <p class="text-gray-400 text-xs mt-2 font-medium">Vendas oficiais via Walacy.</p>
+                <p class="text-gray-400 text-xs mt-2 font-medium uppercase">Vendas oficiais via Walacy.</p>
             </div>
             <button onclick="toggleModal()" class="text-gray-400 text-sm font-bold uppercase tracking-widest hover:text-baby-red transition">Termos do site</button>
         </div>
     </footer>
 
-    <!-- Modal Termos -->
+    <!-- Modal de Termos -->
     <div id="modal-terms" onclick="if(event.target === this) toggleModal()">
-        <div class="bg-white rounded-[32px] p-8 max-w-md w-full shadow-2xl relative">
+        <div class="bg-white rounded-[32px] p-8 max-w-md w-full shadow-2xl relative m-6">
             <button onclick="toggleModal()" class="absolute top-6 right-6 text-gray-400 hover:text-baby-red">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <h3 class="text-xl font-black text-gray-900 mb-6">Termos do site 🧑🏻‍💻</h3>
+            <div class="text-center mb-6"><h3 class="text-xl font-black text-gray-900 leading-tight uppercase">Termos do site 🧑🏻‍💻</h3></div>
             <div class="space-y-4 mb-8">
-                <p class="text-sm font-semibold text-gray-700 p-3 bg-red-50 rounded-xl">1 - Não aceitamos reembolso ❌</p>
-                <p class="text-sm font-semibold text-gray-700 p-3 bg-red-50 rounded-xl">2 - Atendimento via WhatsApp 🪀</p>
-                <p class="text-sm font-semibold text-gray-700 p-3 bg-red-50 rounded-xl">3 - Suporte 24 horas por dia 🧑🏻‍💻</p>
-                <p class="text-sm font-semibold text-gray-700 p-3 bg-red-50 rounded-xl">4 - Entrega na mesma hora ✅</p>
+                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-xl"><span class="font-bold text-baby-red">1 -</span><p class="text-sm font-semibold text-gray-700">Não aceitamos reembolso ❌</p></div>
+                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-xl"><span class="font-bold text-baby-red">2 -</span><p class="text-sm font-semibold text-gray-700">Atendimento via WhatsApp 🪀</p></div>
+                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-xl"><span class="font-bold text-baby-red">3 -</span><p class="text-sm font-semibold text-gray-700">Suporte 24 horas por dia 🧑🏻‍💻</p></div>
+                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-xl"><span class="font-bold text-baby-red">4 -</span><p class="text-sm font-semibold text-gray-700">Entrega na mesma hora ✅</p></div>
             </div>
             <button onclick="toggleModal()" class="w-full py-4 bg-gray-900 text-white rounded-xl font-bold">Fechar</button>
         </div>
     </div>
 
-    <!-- YouTube API Script -->
     <script>
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var player;
-        var isPlaying = false;
-
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-audio-player', {
-                height: '0',
-                width: '0',
-                videoId: 'hNP7SOWm_S8', // Kordhell - Murder In My Mind
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0,
-                    'modestbranding': 1,
-                    'rel': 0,
-                    'loop': 1,
-                    'playlist': 'hNP7SOWm_S8'
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onError': onPlayerError
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            console.log("Música carregada e pronta.");
-        }
-
-        function onPlayerError(e) {
-            console.error("Erro no player:", e);
-        }
-
-        function toggleMusic() {
-            const fab = document.getElementById('music-fab');
-            const playIcon = document.getElementById('play-icon');
-            const pauseIcon = document.getElementById('pause-icon');
-
-            if (!player || typeof player.playVideo !== 'function') {
-                console.error("Player ainda não está carregado.");
-                return;
-            }
-
-            if (!isPlaying) {
-                player.playVideo();
-                fab.classList.add('playing');
-                playIcon.classList.add('hidden');
-                pauseIcon.classList.remove('hidden');
-                isPlaying = true;
-            } else {
-                player.pauseVideo();
-                fab.classList.remove('playing');
-                playIcon.classList.remove('hidden');
-                pauseIcon.classList.add('hidden');
-                isPlaying = false;
-            }
-        }
-
         function toggleModal() {
             const modal = document.getElementById('modal-terms');
             modal.classList.toggle('active');
             document.body.style.overflow = modal.classList.contains('active') ? 'hidden' : 'auto';
         }
+
+        function toggleMenu() {
+            const menu = document.getElementById('floating-menu');
+            menu.classList.toggle('active');
+        }
+
+        function showSection(sectionId) {
+            document.getElementById('main-content').classList.add('hidden');
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('floating-menu').classList.remove('active');
+            document.getElementById(`section-${sectionId}`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showMain() {
+            document.getElementById('main-content').classList.remove('hidden');
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('floating-menu').classList.remove('active');
+            window.scrollTo(0, 0);
+        }
+
+        window.addEventListener('click', function(e) {
+            const menu = document.getElementById('floating-menu');
+            const button = document.querySelector('nav button[onclick="toggleMenu()"]');
+            if (menu && button && !menu.contains(e.target) && !button.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
     </script>
+
 </body>
 </html>
-
