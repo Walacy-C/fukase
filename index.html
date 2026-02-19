@@ -18,6 +18,7 @@
             background-color: var(--bg-pastel);
             font-family: 'Plus Jakarta Sans', sans-serif;
             color: #450a0a;
+            overflow-x: hidden;
         }
 
         .text-baby-red { color: var(--baby-red); }
@@ -54,7 +55,7 @@
             transition: all 0.3s ease;
         }
 
-        /* Estilos do Modal */
+        /* Modal */
         #modal-terms {
             display: none;
             position: fixed;
@@ -71,7 +72,7 @@
             display: flex;
         }
 
-        /* Estilo do Player Flutuante */
+        /* Player Flutuante Melhorado */
         .music-player-fab {
             position: fixed;
             bottom: 2rem;
@@ -79,50 +80,55 @@
             z-index: 99;
             background: var(--baby-red);
             color: white;
-            width: 56px;
-            height: 56px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 10px 25px rgba(248, 113, 113, 0.4);
+            box-shadow: 0 10px 25px rgba(248, 113, 113, 0.5);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 3px solid white;
         }
 
-        .music-player-fab:hover {
-            transform: scale(1.1);
-            background: var(--baby-red-dark);
+        .music-player-fab:active {
+            transform: scale(0.9);
         }
 
         .music-player-fab.playing {
-            animation: pulse-red 2s infinite;
+            animation: pulse-red 1.5s infinite;
+            background: var(--baby-red-dark);
         }
 
         @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(248, 113, 113, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.7); transform: scale(1); }
+            70% { box-shadow: 0 0 0 15px rgba(248, 113, 113, 0); transform: scale(1.05); }
+            100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0); transform: scale(1); }
         }
 
-        #youtube-player-container {
-            display: none; /* O player fica oculto, apenas o áudio importa */
+        /* Esconder o iframe mas manter funcional */
+        #player-wrapper {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            visibility: hidden;
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- API do YouTube escondida -->
-    <div id="youtube-player-container">
-        <div id="player"></div>
+    <!-- Container do Player YouTube -->
+    <div id="player-wrapper">
+        <div id="youtube-audio-player"></div>
     </div>
 
-    <!-- Botão Flutuante de Música -->
+    <!-- Botão Flutuante -->
     <div id="music-fab" class="music-player-fab" onclick="toggleMusic()">
-        <svg id="play-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <svg id="play-icon" class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
         </svg>
-        <svg id="pause-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20">
+        <svg id="pause-icon" class="w-8 h-8 hidden" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
         </svg>
     </div>
@@ -151,7 +157,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="home" class="pt-40 pb-20 px-6">
         <div class="container mx-auto text-center max-w-4xl">
             <span class="inline-block py-1 px-4 rounded-full bg-red-100 text-baby-red text-xs font-bold uppercase mb-6">A Melhor Store de Bots e Serviços</span>
@@ -159,7 +165,7 @@
                 Eleve o seu nível com a <span class="text-baby-red">RICK SHOP</span>
             </h1>
             <p class="text-gray-500 text-lg mb-10 max-w-2xl mx-auto">
-                Acesso exclusivo aos melhores planos do Fukase e arquivos oficiais. Clique em um plano abaixo para falar diretamente com o <b>Walacy</b>.
+                Acesso exclusivo aos melhores planos do Fukase e arquivos oficiais. Clique num plano abaixo para falar diretamente com o <b>Walacy</b>.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#planos" class="bg-baby-red text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-red-200 hover:scale-105 transition-transform">
@@ -169,7 +175,7 @@
         </div>
     </section>
 
-    <!-- Planos de Venda -->
+    <!-- Planos -->
     <section id="planos" class="py-20 bg-white">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
@@ -178,8 +184,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                
-                <!-- Plano 1: Mensal -->
+                <!-- Mensal -->
                 <div class="plan-card bg-white p-8 rounded-[32px] border-2 border-gray-50 flex flex-col h-full">
                     <div class="mb-6">
                         <span class="text-gray-400 font-bold text-sm uppercase">Fukase Access</span>
@@ -189,18 +194,12 @@
                         <span class="text-4xl font-black text-gray-900">R$ 5</span>
                         <span class="text-gray-400 font-medium">/mês</span>
                     </div>
-                    <ul class="space-y-4 mb-10 flex-grow text-sm text-gray-600">
-                        <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 text-baby-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Acesso Premium 30 dias
-                        </li>
-                    </ul>
-                    <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20Mensal" target="_blank" class="btn-purchase bg-gray-50 text-gray-800 hover:bg-baby-red hover:text-white">
+                    <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20Mensal" target="_blank" class="btn-purchase bg-gray-50 text-gray-800 hover:bg-baby-red hover:text-white mt-auto">
                         Assinar Mensal
                     </a>
                 </div>
 
-                <!-- Plano 2: Vitalício -->
+                <!-- Permanente -->
                 <div class="plan-card bg-white p-8 rounded-[32px] border-2 border-baby-red shadow-2xl shadow-red-100 flex flex-col h-full relative overflow-hidden">
                     <div class="absolute top-0 right-0 badge-popular text-white text-[10px] font-bold px-8 py-2 rotate-45 translate-x-6 translate-y-2 uppercase">
                         Popular
@@ -213,18 +212,12 @@
                         <span class="text-4xl font-black text-gray-900">R$ 25</span>
                         <span class="text-gray-400 font-medium">/único</span>
                     </div>
-                    <ul class="space-y-4 mb-10 flex-grow text-sm text-gray-600">
-                        <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 text-baby-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Acesso Vitalício
-                        </li>
-                    </ul>
-                    <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20permanente" target="_blank" class="btn-purchase bg-baby-red text-white hover:bg-red-500 shadow-lg shadow-red-200">
+                    <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20permanente" target="_blank" class="btn-purchase bg-baby-red text-white hover:bg-red-500 shadow-lg shadow-red-200 mt-auto">
                         Obter Permanente
                     </a>
                 </div>
 
-                <!-- Plano 3: Arquivo -->
+                <!-- Arquivo -->
                 <div class="plan-card bg-gray-900 p-8 rounded-[32px] flex flex-col h-full text-white">
                     <div class="mb-6">
                         <span class="text-red-400 font-bold text-sm uppercase">Source Code</span>
@@ -234,17 +227,10 @@
                         <span class="text-4xl font-black text-white">R$ 45</span>
                         <span class="text-gray-500 font-medium">/full</span>
                     </div>
-                    <ul class="space-y-4 mb-10 flex-grow text-gray-300 text-sm">
-                        <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            Arquivo Oficial Completo
-                        </li>
-                    </ul>
-                    <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20comprar%20o%20arquivo%20do%20bot" target="_blank" class="btn-purchase bg-white text-gray-900 hover:bg-red-50">
+                    <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20comprar%20o%20arquivo%20do%20bot" target="_blank" class="btn-purchase bg-white text-gray-900 hover:bg-red-50 mt-auto">
                         Comprar Arquivo
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
@@ -256,89 +242,74 @@
                 <span class="text-xl font-black uppercase tracking-tighter">RICK <span class="text-baby-red">SHOP</span></span>
                 <p class="text-gray-400 text-xs mt-2 font-medium">Vendas oficiais via Walacy.</p>
             </div>
-            <div class="flex flex-col items-center md:items-end gap-2">
-                <button onclick="toggleModal()" class="text-gray-400 text-sm font-bold uppercase tracking-widest hover:text-baby-red transition">Termos do site</button>
-            </div>
+            <button onclick="toggleModal()" class="text-gray-400 text-sm font-bold uppercase tracking-widest hover:text-baby-red transition">Termos do site</button>
         </div>
     </footer>
 
-    <!-- Modal de Termos -->
+    <!-- Modal Termos -->
     <div id="modal-terms" onclick="if(event.target === this) toggleModal()">
-        <div class="bg-white rounded-[32px] p-8 max-w-md w-full shadow-2xl border-2 border-red-50 relative">
+        <div class="bg-white rounded-[32px] p-8 max-w-md w-full shadow-2xl relative">
             <button onclick="toggleModal()" class="absolute top-6 right-6 text-gray-400 hover:text-baby-red">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            
-            <div class="text-center mb-6">
-                <div class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-baby-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                </div>
-                <h3 class="text-xl font-black text-gray-900 leading-tight">Aqui estão todos os termos do site 🧑🏻‍💻</h3>
-            </div>
-
+            <h3 class="text-xl font-black text-gray-900 mb-6">Termos do site 🧑🏻‍💻</h3>
             <div class="space-y-4 mb-8">
-                <div class="flex items-start gap-3 p-3 bg-red-50/50 rounded-xl border border-red-50">
-                    <span class="font-bold text-baby-red">1 -</span>
-                    <p class="text-sm font-semibold text-gray-700">Não aceitamos reembolso ❌</p>
-                </div>
-                <div class="flex items-start gap-3 p-3 bg-red-50/50 rounded-xl border border-red-50">
-                    <span class="font-bold text-baby-red">2 -</span>
-                    <p class="text-sm font-semibold text-gray-700">Atendimento via WhatsApp 🪀</p>
-                </div>
-                <div class="flex items-start gap-3 p-3 bg-red-50/50 rounded-xl border border-red-50">
-                    <span class="font-bold text-baby-red">3 -</span>
-                    <p class="text-sm font-semibold text-gray-700">Suporte 24 horas por dia 🧑🏻‍💻</p>
-                </div>
-                <div class="flex items-start gap-3 p-3 bg-red-50/50 rounded-xl border border-red-50">
-                    <span class="font-bold text-baby-red">4 -</span>
-                    <p class="text-sm font-semibold text-gray-700">Entrega na mesma hora ✅</p>
-                </div>
+                <p class="text-sm font-semibold text-gray-700 p-3 bg-red-50 rounded-xl">1 - Não aceitamos reembolso ❌</p>
+                <p class="text-sm font-semibold text-gray-700 p-3 bg-red-50 rounded-xl">2 - Atendimento via WhatsApp 🪀</p>
+                <p class="text-sm font-semibold text-gray-700 p-3 bg-red-50 rounded-xl">3 - Suporte 24 horas por dia 🧑🏻‍💻</p>
+                <p class="text-sm font-semibold text-gray-700 p-3 bg-red-50 rounded-xl">4 - Entrega na mesma hora ✅</p>
             </div>
-
-            <button onclick="toggleModal()" class="w-full py-4 bg-gray-900 text-white rounded-xl font-bold hover:bg-baby-red transition-all">
-                Entendi e concordo
-            </button>
+            <button onclick="toggleModal()" class="w-full py-4 bg-gray-900 text-white rounded-xl font-bold">Fechar</button>
         </div>
     </div>
 
-    <!-- Script da API do YouTube -->
-    <script src="https://www.youtube.com/iframe_api"></script>
-
+    <!-- YouTube API Script -->
     <script>
-        // Lógica do Modal
-        function toggleModal() {
-            const modal = document.getElementById('modal-terms');
-            modal.classList.toggle('active');
-            if(modal.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = 'auto';
-            }
-        }
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        // Lógica do Player do YouTube
-        let player;
-        let isPlaying = false;
+        var player;
+        var isPlaying = false;
 
         function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
+            player = new YT.Player('youtube-audio-player', {
                 height: '0',
                 width: '0',
-                videoId: 'hNP7SOWm_S8', // ID do vídeo Murder In My Mind
+                videoId: 'hNP7SOWm_S8', // Kordhell - Murder In My Mind
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'loop': 1,
+                    'playlist': 'hNP7SOWm_S8'
+                },
                 events: {
-                    'onReady': onPlayerReady
+                    'onReady': onPlayerReady,
+                    'onError': onPlayerError
                 }
             });
         }
 
         function onPlayerReady(event) {
-            console.log("Player pronto para tocar.");
+            console.log("Música carregada e pronta.");
+        }
+
+        function onPlayerError(e) {
+            console.error("Erro no player:", e);
         }
 
         function toggleMusic() {
             const fab = document.getElementById('music-fab');
             const playIcon = document.getElementById('play-icon');
             const pauseIcon = document.getElementById('pause-icon');
+
+            if (!player || typeof player.playVideo !== 'function') {
+                console.error("Player ainda não está carregado.");
+                return;
+            }
 
             if (!isPlaying) {
                 player.playVideo();
@@ -354,7 +325,13 @@
                 isPlaying = false;
             }
         }
-    </script>
 
+        function toggleModal() {
+            const modal = document.getElementById('modal-terms');
+            modal.classList.toggle('active');
+            document.body.style.overflow = modal.classList.contains('active') ? 'hidden' : 'auto';
+        }
+    </script>
 </body>
 </html>
+
