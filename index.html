@@ -60,12 +60,28 @@
         }
 
         /* Modais e Transições de Seção */
-        #modal-terms, .content-section {
+        #modal-terms {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-section {
             display: none;
             transition: all 0.5s ease;
         }
 
-        #modal-terms.active, .content-section.active {
+        #modal-terms.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-section.active {
             display: flex;
             animation: slideUp 0.5s ease-out;
         }
@@ -77,6 +93,11 @@
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* Menu Flutuante */
@@ -259,9 +280,7 @@
     <!-- SEÇÃO DO CRIADOR -->
     <section id="section-creator" class="content-section section-container flex-col items-center px-6">
         <div class="max-w-xl w-full bg-white p-10 rounded-[40px] shadow-2xl shadow-red-100 text-center">
-            <!-- Círculo para sua foto (Avatar) -->
             <div class="avatar-circle">
-                <!-- Substitua o SRC abaixo pela sua URL de imagem -->
                 <img src="https://files.catbox.moe/4all41.jpg" alt="Walacy Rick">
             </div>
             
@@ -283,7 +302,6 @@
     <!-- SEÇÃO DE HOSPEDAGEM -->
     <section id="section-hosting" class="content-section section-container flex-col items-center px-6">
         <div class="max-w-4xl w-full bg-white rounded-[40px] shadow-2xl shadow-red-100 overflow-hidden">
-            <!-- Imagem de atualização em andamento conforme solicitado -->
             <div class="relative h-72 md:h-96 w-full">
                 <img src="https://files.catbox.moe/kpmoay.jpg" class="w-full h-full object-cover" alt="Bronxys Host Atualização">
                 <div class="absolute inset-0 bg-black/30 flex items-end p-8">
@@ -331,7 +349,7 @@
 
     <!-- Modal de Termos -->
     <div id="modal-terms" onclick="if(event.target === this) toggleModal()">
-        <div class="bg-white rounded-[32px] p-8 max-w-md w-full shadow-2xl relative m-6">
+        <div class="bg-white rounded-[32px] p-8 max-w-md w-full shadow-2xl relative m-6" onclick="event.stopPropagation()">
             <button onclick="toggleModal()" class="absolute top-6 right-6 text-gray-400 hover:text-baby-red">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
@@ -350,7 +368,14 @@
         function toggleModal() {
             const modal = document.getElementById('modal-terms');
             modal.classList.toggle('active');
-            document.body.style.overflow = modal.classList.contains('active') ? 'hidden' : 'auto';
+            // Só trava o scroll se o modal estiver aberto E não estivermos em uma seção extra
+            if (modal.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Se o conteúdo principal estiver escondido, mantém o overflow para a seção atual
+                const mainHidden = document.getElementById('main-content').classList.contains('hidden');
+                document.body.style.overflow = mainHidden ? 'auto' : 'auto';
+            }
         }
 
         function toggleMenu() {
@@ -359,10 +384,17 @@
         }
 
         function showSection(sectionId) {
+            // Esconde o conteúdo principal e outras seções
             document.getElementById('main-content').classList.add('hidden');
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            
+            // Fecha menu flutuante e garante que modal de termos suma se estiver aberto
             document.getElementById('floating-menu').classList.remove('active');
+            document.getElementById('modal-terms').classList.remove('active');
+            
+            // Ativa a seção e reseta scroll
             document.getElementById(`section-${sectionId}`).classList.add('active');
+            document.body.style.overflow = 'auto';
             window.scrollTo(0, 0);
         }
 
@@ -370,9 +402,12 @@
             document.getElementById('main-content').classList.remove('hidden');
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById('floating-menu').classList.remove('active');
+            document.getElementById('modal-terms').classList.remove('active');
+            document.body.style.overflow = 'auto';
             window.scrollTo(0, 0);
         }
 
+        // Fechar menu ao clicar fora
         window.addEventListener('click', function(e) {
             const menu = document.getElementById('floating-menu');
             const button = document.querySelector('nav button[onclick="toggleMenu()"]');
@@ -384,3 +419,4 @@
 
 </body>
 </html>
+
