@@ -8,10 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --baby-red: #f87171;
-            --baby-red-light: #fca5a5;
-            --baby-red-dark: #ef4444;
-            --bg-pastel: #fffafb;
+            /* Novas cores: Azul Escuro e Preto */
+            --primary-blue: #1e3a8a;
+            --primary-dark: #0f172a;
+            --bg-dark-grey: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #f8fafc;
         }
 
         html {
@@ -19,34 +21,35 @@
         }
 
         body {
-            background-color: var(--bg-pastel);
+            background-color: var(--bg-dark-grey);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #450a0a;
+            color: var(--text-main);
             overflow-x: hidden;
         }
 
-        .text-baby-red { color: var(--baby-red); }
-        .bg-baby-red { background-color: var(--baby-red); }
+        .text-baby-red { color: #3b82f6; } /* Ajustado para azul harmônico */
+        .bg-baby-red { background: linear-gradient(135deg, var(--primary-blue), #000000); }
         
         .glass-header {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(18, 18, 18, 0.9);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(248, 113, 113, 0.1);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
         }
 
         .plan-card {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 2px solid transparent;
+            background-color: var(--card-bg);
         }
 
         .plan-card:hover {
             transform: translateY(-10px);
-            border-color: var(--baby-red-light);
-            box-shadow: 0 20px 40px rgba(248, 113, 113, 0.15);
+            border-color: var(--primary-blue);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
         .badge-popular {
-            background: linear-gradient(45deg, var(--baby-red), #fb923c);
+            background: linear-gradient(45deg, var(--primary-blue), #000000);
         }
 
         .btn-purchase {
@@ -60,30 +63,20 @@
         }
 
         /* Modais e Transições de Seção */
-        #modal-terms {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            align-items: center;
-            justify-content: center;
-        }
-
-        .content-section {
+        #modal-terms, .content-section {
             display: none;
             transition: all 0.5s ease;
         }
 
-        #modal-terms.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .content-section.active {
+        #modal-terms.active, .content-section.active {
             display: flex;
             animation: slideUp 0.5s ease-out;
+            background: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
         }
 
         #main-content.hidden {
@@ -95,11 +88,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         /* Menu Flutuante */
         #floating-menu {
             display: none;
@@ -107,10 +95,10 @@
             top: 70px;
             right: 24px;
             width: 250px;
-            background: white;
+            background: #1e1e1e;
             border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            border: 1px solid rgba(248, 113, 113, 0.1);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(59, 130, 246, 0.2);
             z-index: 100;
             overflow: hidden;
             transform-origin: top right;
@@ -137,14 +125,14 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background-color: var(--baby-red-light);
+            background: linear-gradient(135deg, var(--primary-blue), #000);
             margin: 0 auto 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            border: 4px solid white;
-            box-shadow: 0 10px 25px rgba(248, 113, 113, 0.2);
+            border: 4px solid #333;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
 
         .avatar-circle img {
@@ -152,6 +140,13 @@
             height: 100%;
             object-fit: cover;
         }
+
+        /* Ajustes específicos para o tema escuro */
+        .text-gray-900, .text-gray-800 { color: #ffffff !important; }
+        .text-gray-600, .text-gray-500, .text-gray-400 { color: #a1a1aa !important; }
+        .bg-white { background-color: #1e1e1e !important; }
+        .bg-gray-50, .bg-red-50 { background-color: #27272a !important; }
+        .border-gray-50, .border-gray-100 { border-color: #3f3f46 !important; }
     </style>
 </head>
 <body class="antialiased">
@@ -160,26 +155,26 @@
     <nav class="fixed w-full z-50 glass-header py-4 px-6">
         <div class="container mx-auto flex justify-between items-center relative">
             <div class="flex items-center gap-3 cursor-pointer" onclick="showMain()">
-                <div class="w-10 h-10 bg-baby-red rounded-xl flex items-center justify-center shadow-lg shadow-red-200">
+                <div class="w-10 h-10 bg-baby-red rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/50">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                 </div>
-                <span class="text-2xl font-extrabold tracking-tighter text-gray-900 uppercase">RICK <span class="text-baby-red">SHOP</span></span>
+                <span class="text-2xl font-extrabold tracking-tighter text-white uppercase">RICK <span class="text-blue-500">SHOP</span></span>
             </div>
             
-            <div class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-tighter text-gray-600">
-                <button onclick="showMain()" class="hover:text-baby-red transition uppercase">Início</button>
-                <a href="#planos" onclick="showMain()" class="hover:text-baby-red transition">Planos</a>
-                <button onclick="toggleModal()" class="hover:text-baby-red transition uppercase">Termos</button>
+            <div class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-tighter text-gray-400">
+                <button onclick="showMain()" class="hover:text-blue-400 transition uppercase">Início</button>
+                <a href="#planos" onclick="showMain()" class="hover:text-blue-400 transition">Planos</a>
+                <button onclick="toggleModal()" class="hover:text-blue-400 transition uppercase">Termos</button>
             </div>
 
             <div class="flex items-center gap-2">
-                <a href="https://wa.me/559191772809" target="_blank" class="bg-gray-900 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-baby-red transition-colors">
+                <a href="https://wa.me/559191772809" target="_blank" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-colors">
                     Contato
                 </a>
                 
-                <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center bg-white border border-gray-100 rounded-lg shadow-sm text-gray-600 hover:text-baby-red transition-all">
+                <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center bg-zinc-800 border border-zinc-700 rounded-lg shadow-sm text-gray-300 hover:text-blue-400 transition-all">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
@@ -187,13 +182,13 @@
 
                 <div id="floating-menu">
                     <div class="p-2">
-                        <button onclick="showSection('creator')" class="w-full text-left px-4 py-3 hover:bg-red-50 rounded-xl transition-colors flex items-center gap-3">
+                        <button onclick="showSection('creator')" class="w-full text-left px-4 py-3 hover:bg-zinc-800 rounded-xl transition-colors flex items-center gap-3">
                             <span class="text-lg">👨🏻‍💻</span>
-                            <span class="text-sm font-bold text-gray-700">Info do Criador</span>
+                            <span class="text-sm font-bold text-gray-200">Info do Criador</span>
                         </button>
-                        <button onclick="showSection('hosting')" class="w-full text-left px-4 py-3 hover:bg-red-50 rounded-xl transition-colors flex items-center gap-3">
+                        <button onclick="showSection('hosting')" class="w-full text-left px-4 py-3 hover:bg-zinc-800 rounded-xl transition-colors flex items-center gap-3">
                             <span class="text-lg">☁️</span>
-                            <span class="text-sm font-bold text-gray-700">Hospedagens</span>
+                            <span class="text-sm font-bold text-gray-200">Hospedagens</span>
                         </button>
                     </div>
                 </div>
@@ -205,70 +200,70 @@
     <main id="main-content">
         <section id="home" class="pt-40 pb-20 px-6">
             <div class="container mx-auto text-center max-w-4xl">
-                <span class="inline-block py-1 px-4 rounded-full bg-red-100 text-baby-red text-xs font-bold uppercase mb-6">SITE OFICIAL DE VENDAS DO RICK</span>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
-                    ÓTIMOS PRODUTOS SÓ NA <span class="text-baby-red">RICK SHOP</span>
+                <span class="inline-block py-1 px-4 rounded-full bg-blue-900/30 text-blue-400 text-xs font-bold uppercase mb-6 border border-blue-800/50">SITE OFICIAL DE VENDAS DO RICK</span>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
+                    ÓTIMOS PRODUTOS SÓ NA <span class="text-blue-500">RICK SHOP</span>
                 </h1>
-                <p class="text-gray-500 text-lg mb-10 max-w-2xl mx-auto">
+                <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
                     Todos os meus recursos de vendas estão disponíveis apenas neste <b>site</b>. 🤹🏻
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <a href="#planos" class="bg-baby-red text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-red-200 hover:scale-105 transition-transform">
+                    <a href="#planos" class="bg-baby-red text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl shadow-blue-900/20 hover:scale-105 transition-transform">
                         Ver Planos
                     </a>
                 </div>
             </div>
         </section>
 
-        <section id="planos" class="py-20 bg-white">
+        <section id="planos" class="py-20 bg-zinc-900/50">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-black text-gray-900 mb-2">Escolha o seu Acesso</h2>
-                    <div class="h-1.5 w-20 bg-baby-red mx-auto rounded-full"></div>
+                    <h2 class="text-3xl font-black text-white mb-2">Escolha o seu Acesso</h2>
+                    <div class="h-1.5 w-20 bg-blue-600 mx-auto rounded-full"></div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    <div class="plan-card bg-white p-8 rounded-[32px] border-2 border-gray-50 flex flex-col h-full">
+                    <div class="plan-card p-8 rounded-[32px] border-2 border-zinc-800 flex flex-col h-full">
                         <div class="mb-6">
-                            <span class="text-gray-400 font-bold text-sm uppercase">Plano Básico</span>
-                            <h3 class="text-2xl font-black text-gray-800">Plano Mensal</h3>
+                            <span class="text-gray-500 font-bold text-sm uppercase">Plano Básico</span>
+                            <h3 class="text-2xl font-black text-white">Plano Mensal</h3>
                         </div>
                         <div class="mb-8">
-                            <span class="text-4xl font-black text-gray-900">R$ 5</span>
-                            <span class="text-gray-400 font-medium">/mês</span>
+                            <span class="text-4xl font-black text-white">R$ 5</span>
+                            <span class="text-gray-500 font-medium">/mês</span>
                         </div>
-                        <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20Mensal" target="_blank" class="btn-purchase bg-gray-50 text-gray-800 hover:bg-baby-red hover:text-white mt-auto">
+                        <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20Mensal" target="_blank" class="btn-purchase bg-zinc-800 text-white hover:bg-blue-600 mt-auto">
                             Assinar Mensal
                         </a>
                     </div>
 
-                    <div class="plan-card bg-white p-8 rounded-[32px] border-2 border-baby-red shadow-2xl shadow-red-100 flex flex-col h-full relative overflow-hidden">
+                    <div class="plan-card p-8 rounded-[32px] border-2 border-blue-600 shadow-2xl shadow-blue-900/20 flex flex-col h-full relative overflow-hidden">
                         <div class="absolute top-0 right-0 badge-popular text-white text-[10px] font-bold px-8 py-2 rotate-45 translate-x-6 translate-y-2 uppercase">
                             Popular
                         </div>
                         <div class="mb-6">
-                            <span class="text-baby-red font-bold text-sm uppercase">Melhor Valor</span>
-                            <h3 class="text-2xl font-black text-gray-800">Plano Permanente</h3>
+                            <span class="text-blue-400 font-bold text-sm uppercase">Melhor Valor</span>
+                            <h3 class="text-2xl font-black text-white">Plano Permanente</h3>
                         </div>
                         <div class="mb-8">
-                            <span class="text-4xl font-black text-gray-900">R$ 25</span>
-                            <span class="text-gray-400 font-medium">/único</span>
+                            <span class="text-4xl font-black text-white">R$ 25</span>
+                            <span class="text-gray-500 font-medium">/único</span>
                         </div>
-                        <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20permanente" target="_blank" class="btn-purchase bg-baby-red text-white hover:bg-red-500 shadow-lg shadow-red-200 mt-auto">
+                        <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20assinar%20o%20plano%20permanente" target="_blank" class="btn-purchase bg-baby-red text-white hover:opacity-90 shadow-lg shadow-blue-900/40 mt-auto">
                             Obter Permanente
                         </a>
                     </div>
 
-                    <div class="plan-card bg-gray-900 p-8 rounded-[32px] flex flex-col h-full text-white">
+                    <div class="plan-card bg-black p-8 rounded-[32px] flex flex-col h-full text-white border-2 border-zinc-800">
                         <div class="mb-6">
-                            <span class="text-red-400 font-bold text-sm uppercase">Arquivo Único</span>
+                            <span class="text-blue-400 font-bold text-sm uppercase">Arquivo Único</span>
                             <h3 class="text-2xl font-black">Arquivo do Bot</h3>
                         </div>
                         <div class="mb-8">
                             <span class="text-4xl font-black text-white">R$ 45</span>
                             <span class="text-gray-500 font-medium">/full</span>
                         </div>
-                        <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20comprar%20o%20arquivo%20do%20bot" target="_blank" class="btn-purchase bg-white text-gray-900 hover:bg-red-50 mt-auto">
+                        <a href="https://wa.me/559191772809?text=Olá,%20Walacy!%20Eu%20quero%20comprar%20o%20arquivo%20do%20bot" target="_blank" class="btn-purchase bg-white text-gray-900 hover:bg-blue-50 mt-auto">
                             Comprar Arquivo
                         </a>
                     </div>
@@ -278,89 +273,89 @@
     </main>
 
     <!-- SEÇÃO DO CRIADOR -->
-    <section id="section-creator" class="content-section section-container flex-col items-center px-6">
-        <div class="max-w-xl w-full bg-white p-10 rounded-[40px] shadow-2xl shadow-red-100 text-center">
+    <section id="section-creator" class="content-section section-container">
+        <div class="max-w-xl w-full bg-zinc-900 p-10 rounded-[40px] shadow-2xl shadow-black/50 text-center border border-zinc-800">
             <div class="avatar-circle">
                 <img src="https://files.catbox.moe/4all41.jpg" alt="Walacy Rick">
             </div>
             
-            <h2 class="text-3xl font-black text-gray-900 mb-2">Walacy (Rick)</h2>
-            <p class="text-baby-red font-bold uppercase tracking-widest text-xs mb-8">Fundador da Rick Shop</p>
+            <h2 class="text-3xl font-black text-white mb-2">Walacy (Rick)</h2>
+            <p class="text-blue-400 font-bold uppercase tracking-widest text-xs mb-8">Fundador da Rick Shop</p>
             
-            <div class="text-gray-500 leading-relaxed space-y-4 text-md px-4">
-                <p>Especialista em desenvolvimento de Bots para WhatsApp e soluções Web automatizadas.</p>
-                <p>Foco total em fornecer ferramentas de alta qualidade para usuários que buscam otimização e tecnologia de ponta.</p>
+            <div class="text-gray-400 leading-relaxed space-y-4 text-md px-4">
+                <p>Olá, me chamo Walacy! Sou um dev aprendiz que estou querendo crescer na carreira de programador.</p>
+                <p>Eu costumo trabalhar geralmente na área de "HTML" e "Linguagem Javascript" e quero trazer um ótimo potencial na minha área de trabalho 🧑🏻‍💻💙</p>
             </div>
             
             <div class="mt-10 flex flex-col gap-3">
-                <a href="https://wa.me/559191772809" target="_blank" class="bg-baby-red text-white py-4 rounded-2xl font-bold shadow-lg shadow-red-100 hover:bg-red-500 transition-all">Falar com Walacy</a>
-                <button onclick="showMain()" class="text-gray-400 font-bold text-sm uppercase tracking-tighter hover:text-gray-600 transition-all">Voltar ao Início</button>
+                <a href="https://wa.me/559191772809" target="_blank" class="bg-baby-red text-white py-4 rounded-2xl font-bold shadow-lg hover:opacity-90 transition-all">Falar com Walacy</a>
+                <button onclick="showMain()" class="text-gray-500 font-bold text-sm uppercase tracking-tighter hover:text-white transition-all">Voltar ao Início</button>
             </div>
         </div>
     </section>
 
     <!-- SEÇÃO DE HOSPEDAGEM -->
-    <section id="section-hosting" class="content-section section-container flex-col items-center px-6">
-        <div class="max-w-4xl w-full bg-white rounded-[40px] shadow-2xl shadow-red-100 overflow-hidden">
+    <section id="section-hosting" class="content-section section-container">
+        <div class="max-w-4xl w-full bg-zinc-900 rounded-[40px] shadow-2xl shadow-black/50 overflow-hidden border border-zinc-800">
             <div class="relative h-72 md:h-96 w-full">
-                <img src="https://files.catbox.moe/kpmoay.jpg" class="w-full h-full object-cover" alt="Bronxys Host Atualização">
-                <div class="absolute inset-0 bg-black/30 flex items-end p-8">
+                <img src="https://files.catbox.moe/kpmoay.jpg" class="w-full h-full object-cover opacity-80" alt="Bronxys Host">
+                <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent flex items-end p-8">
                     <h2 class="text-4xl font-black text-white uppercase tracking-tighter">Bronxys <span class="text-blue-400">Host</span></h2>
                 </div>
             </div>
             
             <div class="p-10 text-center">
-                <div class="inline-block py-1 px-4 rounded-full bg-blue-50 text-blue-500 text-xs font-bold uppercase mb-4">Parceiro Oficial</div>
-                <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+                <div class="inline-block py-1 px-4 rounded-full bg-blue-900/30 text-blue-400 text-xs font-bold uppercase mb-4">Parceiro Oficial</div>
+                <p class="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
                     Para meus projetos e vendas de alta performance, eu utilizo e recomendo a <b>BronxysHost.com</b>. Estabilidade, suporte de qualidade e o melhor ping para o seu Bot.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-                    <div class="p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                    <div class="p-5 bg-zinc-800 rounded-2xl border border-zinc-700">
                         <span class="block text-2xl mb-1 text-blue-500">⚡</span>
-                        <span class="font-bold text-gray-800 text-sm">Ultra Veloz</span>
+                        <span class="font-bold text-white text-sm">Ultra Veloz</span>
                     </div>
-                    <div class="p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                    <div class="p-5 bg-zinc-800 rounded-2xl border border-zinc-700">
                         <span class="block text-2xl mb-1 text-blue-500">🛡️</span>
-                        <span class="font-bold text-gray-800 text-sm">DDoS Protection</span>
+                        <span class="font-bold text-white text-sm">DDoS Protection</span>
                     </div>
-                    <div class="p-5 bg-gray-50 rounded-2xl border border-gray-100">
+                    <div class="p-5 bg-zinc-800 rounded-2xl border border-zinc-700">
                         <span class="block text-2xl mb-1 text-blue-500">💸</span>
-                        <span class="font-bold text-gray-800 text-sm">Melhor Preço</span>
+                        <span class="font-bold text-white text-sm">Melhor Preço</span>
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row justify-center gap-4">
-                    <a href="https://bronxyshost.com" target="_blank" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-100">Visitar Bronxys Host</a>
-                    <button onclick="showMain()" class="bg-gray-100 text-gray-600 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-gray-200 transition-all">Voltar</button>
+                    <a href="https://bronxyshost.com" target="_blank" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-900/20">Visitar Bronxys Host</a>
+                    <button onclick="showMain()" class="bg-zinc-800 text-gray-300 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-zinc-700 transition-all">Voltar</button>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Rodapé -->
-    <footer class="py-12 border-t border-gray-100 bg-white">
+    <footer class="py-12 border-t border-zinc-800 bg-black/30">
         <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="text-center md:text-left">
-                <span class="text-xl font-black uppercase tracking-tighter">RICK <span class="text-baby-red">SHOP</span></span>
-                <p class="text-gray-400 text-xs mt-2 font-medium uppercase">Vendas oficiais via Walacy.</p>
+                <span class="text-xl font-black uppercase tracking-tighter text-white">RICK <span class="text-blue-500">SHOP</span></span>
+                <p class="text-gray-500 text-xs mt-2 font-medium uppercase">Vendas oficiais via Walacy.</p>
             </div>
-            <button onclick="toggleModal()" class="text-gray-400 text-sm font-bold uppercase tracking-widest hover:text-baby-red transition">Termos do site</button>
+            <button onclick="toggleModal()" class="text-gray-500 text-sm font-bold uppercase tracking-widest hover:text-blue-400 transition">Termos do site</button>
         </div>
     </footer>
 
     <!-- Modal de Termos -->
     <div id="modal-terms" onclick="if(event.target === this) toggleModal()">
-        <div class="bg-white rounded-[32px] p-8 max-w-md w-full shadow-2xl relative m-6" onclick="event.stopPropagation()">
-            <button onclick="toggleModal()" class="absolute top-6 right-6 text-gray-400 hover:text-baby-red">
+        <div class="bg-zinc-900 border border-zinc-800 rounded-[32px] p-8 max-w-md w-full shadow-2xl relative m-6">
+            <button onclick="toggleModal()" class="absolute top-6 right-6 text-gray-500 hover:text-blue-400">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <div class="text-center mb-6"><h3 class="text-xl font-black text-gray-900 leading-tight uppercase">Termos do site 🧑🏻‍💻</h3></div>
+            <div class="text-center mb-6"><h3 class="text-xl font-black text-white leading-tight uppercase">Termos do site 🧑🏻‍💻</h3></div>
             <div class="space-y-4 mb-8">
-                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-xl"><span class="font-bold text-baby-red">1 -</span><p class="text-sm font-semibold text-gray-700">Não aceitamos reembolso ❌</p></div>
-                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-xl"><span class="font-bold text-baby-red">2 -</span><p class="text-sm font-semibold text-gray-700">Atendimento via WhatsApp 🪀</p></div>
-                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-xl"><span class="font-bold text-baby-red">3 -</span><p class="text-sm font-semibold text-gray-700">Suporte 24 horas por dia 🧑🏻‍💻</p></div>
-                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-xl"><span class="font-bold text-baby-red">4 -</span><p class="text-sm font-semibold text-gray-700">Entrega na mesma hora ✅</p></div>
+                <div class="flex items-start gap-3 p-3 bg-zinc-800 rounded-xl"><span class="font-bold text-blue-500">1 -</span><p class="text-sm font-semibold text-gray-300">Não aceitamos reembolso ❌</p></div>
+                <div class="flex items-start gap-3 p-3 bg-zinc-800 rounded-xl"><span class="font-bold text-blue-500">2 -</span><p class="text-sm font-semibold text-gray-300">Atendimento via WhatsApp 🪀</p></div>
+                <div class="flex items-start gap-3 p-3 bg-zinc-800 rounded-xl"><span class="font-bold text-blue-500">3 -</span><p class="text-sm font-semibold text-gray-300">Suporte 24 horas por dia 🧑🏻‍💻</p></div>
+                <div class="flex items-start gap-3 p-3 bg-zinc-800 rounded-xl"><span class="font-bold text-blue-500">4 -</span><p class="text-sm font-semibold text-gray-300">Entrega na mesma hora ✅</p></div>
             </div>
-            <button onclick="toggleModal()" class="w-full py-4 bg-gray-900 text-white rounded-xl font-bold">Fechar</button>
+            <button onclick="toggleModal()" class="w-full py-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700">Fechar</button>
         </div>
     </div>
 
@@ -368,14 +363,7 @@
         function toggleModal() {
             const modal = document.getElementById('modal-terms');
             modal.classList.toggle('active');
-            // Só trava o scroll se o modal estiver aberto E não estivermos em uma seção extra
-            if (modal.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                // Se o conteúdo principal estiver escondido, mantém o overflow para a seção atual
-                const mainHidden = document.getElementById('main-content').classList.contains('hidden');
-                document.body.style.overflow = mainHidden ? 'auto' : 'auto';
-            }
+            document.body.style.overflow = modal.classList.contains('active') ? 'hidden' : 'auto';
         }
 
         function toggleMenu() {
@@ -384,17 +372,10 @@
         }
 
         function showSection(sectionId) {
-            // Esconde o conteúdo principal e outras seções
             document.getElementById('main-content').classList.add('hidden');
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            
-            // Fecha menu flutuante e garante que modal de termos suma se estiver aberto
             document.getElementById('floating-menu').classList.remove('active');
-            document.getElementById('modal-terms').classList.remove('active');
-            
-            // Ativa a seção e reseta scroll
             document.getElementById(`section-${sectionId}`).classList.add('active');
-            document.body.style.overflow = 'auto';
             window.scrollTo(0, 0);
         }
 
@@ -402,12 +383,9 @@
             document.getElementById('main-content').classList.remove('hidden');
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.getElementById('floating-menu').classList.remove('active');
-            document.getElementById('modal-terms').classList.remove('active');
-            document.body.style.overflow = 'auto';
             window.scrollTo(0, 0);
         }
 
-        // Fechar menu ao clicar fora
         window.addEventListener('click', function(e) {
             const menu = document.getElementById('floating-menu');
             const button = document.querySelector('nav button[onclick="toggleMenu()"]');
@@ -419,4 +397,3 @@
 
 </body>
 </html>
-
