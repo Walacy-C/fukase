@@ -69,7 +69,6 @@
             font-size: 1.5rem;
         }
 
-        /* Animação de entrada para os planos */
         @keyframes slideFade {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -79,20 +78,10 @@
             animation: slideFade 0.8s ease forwards;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -101,7 +90,6 @@
     <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <!-- Símbolo de Pirulito -->
                 <i class="fas fa-candy-cane lollipop-icon rotate-45"></i>
                 <span class="text-xl font-extrabold tracking-tighter uppercase">Fukase<span class="text-red-600">Bot</span></span>
             </div>
@@ -121,7 +109,6 @@
     <!-- Hero Section -->
     <section class="relative pt-40 pb-20 px-6 hero-gradient overflow-hidden">
         <div class="max-w-5xl mx-auto text-center relative z-10">
-            <!-- Fukase Avatar -->
             <div class="inline-block relative mb-10">
                 <div class="absolute inset-0 bg-red-600 blur-[60px] opacity-30 rounded-full"></div>
                 <img src="https://i.ibb.co/yFLnFV3k/a82e70a56baa.jpg" alt="Fukase Avatar" 
@@ -129,12 +116,12 @@
             </div>
 
             <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
-                A Inteligência que seu <br>
-                <span class="text-gradient uppercase">Grupo Merece.</span>
+                O bot que seu <br>
+                <span class="text-gradient uppercase">Grupo Precisa.</span>
             </h1>
             
             <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-                Gerenciamento profissional, segurança impenetrável e o carisma do Fukase para transformar seu grupo de WhatsApp no mais completo do Brasil.
+                Sistema profissional e bem avaliado para um ótimo bot para seu grupo com suporte e sistemas super completos
             </p>
 
             <div class="flex flex-col md:flex-row items-center justify-center gap-4">
@@ -144,22 +131,6 @@
                 <a href="https://wa.me/559191772809" target="_blank" class="bg-white/5 hover:bg-white/10 w-full md:w-auto px-10 py-4 rounded-xl font-bold text-lg border border-white/10 transition flex items-center justify-center gap-2">
                     Falar no Suporte
                 </a>
-            </div>
-
-            <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mt-24 max-w-3xl mx-auto">
-                <div>
-                    <div class="text-3xl font-black text-red-600">800+</div>
-                    <div class="text-sm text-gray-500 uppercase tracking-widest font-bold">Comandos</div>
-                </div>
-                <div>
-                    <div class="text-3xl font-black text-red-600">99.9%</div>
-                    <div class="text-sm text-gray-500 uppercase tracking-widest font-bold">Uptime</div>
-                </div>
-                <div class="col-span-2 md:col-span-1">
-                    <div class="text-3xl font-black text-red-600">24/7</div>
-                    <div class="text-sm text-gray-500 uppercase tracking-widest font-bold">Suporte</div>
-                </div>
             </div>
         </div>
     </section>
@@ -199,10 +170,10 @@
 
                 <div class="glass-card p-8 rounded-2xl">
                     <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
-                        <i class="fas fa-search text-2xl"></i>
+                        <i class="fas fa-cloud-arrow-down text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Consultas VIP</h3>
-                    <p class="text-gray-400 text-sm">Acesso a consultas de CPF, Nome, Placa e Score diretamente pelo bot.</p>
+                    <h3 class="text-xl font-bold mb-3">Auto Downloads</h3>
+                    <p class="text-gray-400 text-sm">Baixe vídeos do TikTok, Instagram e YouTube automaticamente apenas enviando o link.</p>
                 </div>
 
                 <div class="glass-card p-8 rounded-2xl">
@@ -210,7 +181,7 @@
                         <i class="fas fa-music text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Multimídia</h3>
-                    <p class="text-gray-400 text-sm">Download de músicas e vídeos do TikTok, Instagram e YouTube sem marca d'água.</p>
+                    <p class="text-gray-400 text-sm">Download de músicas e vídeos em alta qualidade sem marca d'água.</p>
                 </div>
 
                 <div class="glass-card p-8 rounded-2xl">
@@ -218,7 +189,7 @@
                         <i class="fas fa-bolt text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Online 24h</h3>
-                    <p class="text-gray-400 text-sm">Fica online o dia todo, limpa cachê automaticamente para evitar pesar e deixar o sistema mais fluido.</p>
+                    <p class="text-gray-400 text-sm">Fica online o dia todo, limpa cachê automaticamente para evitar pesar e deixar o sistema fluido.</p>
                 </div>
             </div>
         </div>
@@ -238,46 +209,22 @@
                         <i class="fas fa-user-shield"></i> Administração
                     </h4>
                     <ul class="space-y-3 text-sm">
-                        <li class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="font-mono text-gray-300">/ban</span>
-                            <span class="text-gray-500">Remove o usuário</span>
-                        </li>
-                        <li class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="font-mono text-gray-300">/mute</span>
-                            <span class="text-gray-500">Silencia por tempo X</span>
-                        </li>
-                        <li class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="font-mono text-gray-300">/promover</span>
-                            <span class="text-gray-500">Dá admin ao usuário</span>
-                        </li>
-                        <li class="flex justify-between">
-                            <span class="font-mono text-gray-300">/anti (tipo)</span>
-                            <span class="text-gray-500">Ativa proteções</span>
-                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/ban</span><span class="text-gray-500">Remove usuário</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/mute</span><span class="text-gray-500">Silencia por tempo</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/promover</span><span class="text-gray-500">Dá admin</span></li>
+                        <li class="flex justify-between"><span class="font-mono text-gray-300">/anti (tipo)</span><span class="text-gray-500">Ativa proteções</span></li>
                     </ul>
                 </div>
 
                 <div class="glass-card p-6 rounded-2xl border-l-4 border-l-red-600">
                     <h4 class="text-red-600 font-bold mb-4 flex items-center gap-2">
-                        <i class="fas fa-database"></i> Consultas VIP
+                        <i class="fas fa-download"></i> Auto Downloads
                     </h4>
                     <ul class="space-y-3 text-sm">
-                        <li class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="font-mono text-gray-300">/cpf</span>
-                            <span class="text-gray-500">Consulta completa</span>
-                        </li>
-                        <li class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="font-mono text-gray-300">/nome</span>
-                            <span class="text-gray-500">Busca por nome</span>
-                        </li>
-                        <li class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="font-mono text-gray-300">/placa</span>
-                            <span class="text-gray-500">Dados de veículos</span>
-                        </li>
-                        <li class="flex justify-between">
-                            <span class="font-mono text-gray-300">/ip</span>
-                            <span class="text-gray-500">Geolocalização</span>
-                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/play</span><span class="text-gray-500">Baixa músicas</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/Instagram</span><span class="text-gray-500">Vídeos do Instagram</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/tiktok</span><span class="text-gray-500">Vídeos TikTok</span></li>
+                        <li class="flex justify-between"><span class="font-mono text-gray-300">/tiktokmp3</span><span class="text-gray-500">Áudio do TikTok</span></li>
                     </ul>
                 </div>
 
@@ -286,22 +233,10 @@
                         <i class="fas fa-dice"></i> Jogos & RPG
                     </h4>
                     <ul class="space-y-3 text-sm">
-                        <li class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="font-mono text-gray-300">/rpgon</span>
-                            <span class="text-gray-500">Cria seu perfil</span>
-                        </li>
-                        <li class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="font-mono text-gray-300">/trabalhar</span>
-                            <span class="text-gray-500">Ganha moedas</span>
-                        </li>
-                        <li class="flex justify-between border-b border-white/5 pb-2">
-                            <span class="font-mono text-gray-300">/cassino</span>
-                            <span class="text-gray-500">Aposta moedas</span>
-                        </li>
-                        <li class="flex justify-between">
-                            <span class="font-mono text-gray-300">/forca</span>
-                            <span class="text-gray-500">Jogo clássico</span>
-                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/rpgon</span><span class="text-gray-500">Cria seu perfil</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/trabalhar</span><span class="text-gray-500">Ganha moedas</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/cassino</span><span class="text-gray-500">Aposta moedas</span></li>
+                        <li class="flex justify-between"><span class="font-mono text-gray-300">/forca</span><span class="text-gray-500">Jogo clássico</span></li>
                     </ul>
                 </div>
             </div>
@@ -309,7 +244,7 @@
     </section>
 
     <!-- Planos Section -->
-    <section id="planos" class="py-24 px-6 relative bg-black">
+    <section id="planos" class="py-24 px-6 bg-black">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold mb-4">Escolha seu <span class="text-red-600 font-black">Plano.</span></h2>
@@ -317,20 +252,18 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 items-stretch">
-                <!-- Plano 1 -->
+                <!-- Planos mantidos conforme solicitação anterior -->
                 <div class="glass-card p-8 rounded-3xl flex flex-col animate-slide" style="animation-delay: 0.1s;">
                     <h3 class="text-xl font-bold mb-2">Mensal</h3>
                     <div class="text-4xl font-black mb-6">R$ 5 <span class="text-sm text-gray-500 font-normal">/mês</span></div>
                     <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
                         <li><i class="fas fa-check text-red-600 mr-2"></i> 1 Grupo</li>
                         <li><i class="fas fa-check text-red-600 mr-2"></i> Comandos de Admin</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Boas-vindas Custom</li>
-                        <li class="opacity-30"><i class="fas fa-times mr-2"></i> Consultas VIP</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Suporte Prioritário</li>
                     </ul>
                     <a href="https://wa.me/559191772809" target="_blank" class="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-bold transition-all text-center">Selecionar</a>
                 </div>
 
-                <!-- Plano 2 -->
                 <div class="glass-card p-8 rounded-3xl flex flex-col relative border-2 border-red-600 scale-105 shadow-2xl shadow-red-600/10 animate-slide" style="animation-delay: 0.2s;">
                     <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-600 text-[10px] uppercase font-bold px-4 py-1 rounded-full">Melhor Custo</div>
                     <h3 class="text-xl font-bold mb-2">Permanente</h3>
@@ -338,35 +271,22 @@
                     <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
                         <li><i class="fas fa-check text-red-600 mr-2"></i> 2 Grupos</li>
                         <li><i class="fas fa-check text-red-600 mr-2"></i> Proteção X9 Ativada</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> RPG & Economia</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Downloads Premium</li>
                         <li><i class="fas fa-check text-red-600 mr-2"></i> Sem expiração</li>
                     </ul>
                     <a href="https://wa.me/559191772809" target="_blank" class="w-full py-4 rounded-xl btn-primary font-bold shadow-lg shadow-red-900/30 transition-all text-center">Adquirir Agora</a>
                 </div>
 
-                <!-- Plano 3 -->
                 <div class="glass-card p-8 rounded-3xl flex flex-col animate-slide" style="animation-delay: 0.3s;">
                     <h3 class="text-xl font-bold mb-2">Arquivo do Bot</h3>
                     <div class="text-4xl font-black mb-6">R$ 40 <span class="text-sm text-gray-500 font-normal">/base</span></div>
                     <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Arquivo Completo (Source)</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Tutorial de Hospedagem</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Sem limites de grupos</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Arquivo Completo</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Tutorial Hospedagem</li>
                         <li><i class="fas fa-check text-red-600 mr-2"></i> Tenha seu próprio bot</li>
                     </ul>
                     <a href="https://wa.me/559191772809" target="_blank" class="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-bold transition-all text-center">Quero a Base</a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section class="py-24 px-6 text-center">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-4xl font-black mb-6">Pronto para usar o <span class="text-red-600">Fukase?</span></h2>
-            <p class="text-gray-400 mb-8">Junte-se a centenas de administradores que já automatizaram seus grupos.</p>
-            <a href="https://wa.me/559191772809" target="_blank" class="btn-primary px-12 py-4 rounded-xl font-black uppercase text-lg inline-block shadow-lg shadow-red-900/40">Falar com o Criador</a>
         </div>
     </section>
 
@@ -405,8 +325,7 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between text-xs text-gray-600 uppercase font-bold tracking-widest">
-            <p>&copy; 2024/2026 Fukase Bot. Todos os direitos reservados.</p>
-            <p>Design by AI</p>
+            <p>&copy; 2026 — Todos os direitos reservados ao Walacy</p>
         </div>
     </footer>
 
