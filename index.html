@@ -3,263 +3,423 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RICK SHOP - Oficial</title>
+    <title>Fukase Bot - A Inteligência do seu Grupo</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
         :root {
-            --pastel-red: #ffb3b3;
-            --dark-pastel-red: #ff8080;
-            --bg-soft: #fff5f5;
-            --whatsapp-green: #25d366;
+            --primary: #ff1a1a;
+            --secondary: #0a0a0a;
+            --accent: #1f1f1f;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-soft);
-            color: #4a4a4a;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--secondary);
+            color: white;
             scroll-behavior: smooth;
         }
 
-        .card-red {
-            background-color: white;
-            border-top: 5px solid var(--pastel-red);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(255, 26, 26, 0.15) 0%, rgba(10, 10, 10, 1) 70%);
         }
 
-        .card-red:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 179, 179, 0.3);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .btn-buy {
-            background-color: var(--pastel-red);
+        .glass-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 26, 26, 0.15);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
             transition: all 0.3s ease;
         }
 
-        .btn-buy:hover {
-            background-color: var(--dark-pastel-red);
-            transform: scale(1.02);
+        .btn-primary:active {
+            transform: scale(0.95);
         }
 
-        .header-gradient {
-            background: linear-gradient(135deg, var(--pastel-red) 0%, #ff9999 100%);
+        .btn-primary:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 20px rgba(255, 26, 26, 0.4);
         }
 
-        .whatsapp-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--whatsapp-green);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 100;
-            transition: transform 0.3s ease;
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff, #ff1a1a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .whatsapp-float:hover {
-            transform: scale(1.1);
+        .fukase-glow {
+            filter: drop-shadow(0 0 20px rgba(255, 26, 26, 0.5));
         }
 
-        .bot-image-container {
-            border: 4px solid var(--pastel-red);
-            border-radius: 1.5rem;
-            overflow: hidden;
-            background: white;
+        .lollipop-icon {
+            color: var(--primary);
+            filter: drop-shadow(0 0 8px rgba(255, 26, 26, 0.8));
+            font-size: 1.5rem;
+        }
+
+        /* Animação de entrada para os planos */
+        @keyframes slideFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-slide {
+            animation: slideFade 0.8s ease forwards;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
     </style>
 </head>
-<body class="min-h-screen pb-20">
+<body class="overflow-x-hidden">
 
     <!-- Header -->
-    <header class="header-gradient text-white py-12 px-4 text-center shadow-lg">
-        <h1 class="text-4xl md:text-5xl font-bold tracking-tight">RICK SHOP</h1>
-        <p class="mt-2 text-lg opacity-90">Qualidade e confiança em cada serviço</p>
-    </header>
-
-    <main class="max-w-6xl mx-auto px-4 py-12">
-        
-        <!-- Seção 1: Planos do Fukase -->
-        <section class="mb-16">
-            <div class="flex items-center mb-8 border-b-2 border-red-100 pb-2">
-                <span class="text-3xl mr-3">📄</span>
-                <h2 class="text-2xl font-bold text-gray-700 uppercase tracking-wider">Planos do Fukase</h2>
+    <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <!-- Símbolo de Pirulito -->
+                <i class="fas fa-candy-cane lollipop-icon rotate-45"></i>
+                <span class="text-xl font-extrabold tracking-tighter uppercase">Fukase<span class="text-red-600">Bot</span></span>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Mensal -->
-                <div class="card-red p-8 rounded-2xl shadow-sm flex flex-col items-center">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-700">Mensal</h3>
-                    <div class="text-3xl font-bold text-red-400 mb-6">R$ 5,00</div>
-                    <ul class="text-sm text-gray-500 mb-8 text-center leading-relaxed">
-                        <li>Acesso por 30 dias</li>
-                        <li>Suporte básico</li>
-                        <li>Atualizações inclusas</li>
-                    </ul>
-                    <button onclick="sendOrder('Olá, Salvatore! Quero assinar o plano mensal')" class="btn-buy w-full py-3 rounded-xl text-white font-bold">Comprar Agora</button>
-                </div>
-
-                <!-- Permanente -->
-                <div class="card-red p-8 rounded-2xl shadow-sm flex flex-col items-center relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-red-400 text-white text-xs px-3 py-1 rounded-bl-lg font-bold uppercase">Melhor Valor</div>
-                    <h3 class="text-xl font-semibold mb-2 text-gray-700">Permanente</h3>
-                    <div class="text-3xl font-bold text-red-400 mb-6">R$ 25,00</div>
-                    <ul class="text-sm text-gray-500 mb-8 text-center leading-relaxed">
-                        <li>Acesso vitalício</li>
-                        <li>Suporte prioritário</li>
-                        <li>Grupo exclusivo</li>
-                    </ul>
-                    <button onclick="sendOrder('Olá, Salvatore! Quero comprar o plano permanente')" class="btn-buy w-full py-3 rounded-xl text-white font-bold">Comprar Agora</button>
-                </div>
-
-                <!-- Arquivo do Bot -->
-                <div class="card-red p-8 rounded-2xl shadow-sm flex flex-col items-center">
-                    <h3 class="text-xl font-semibold mb-2 text-gray-700">Arquivo do Bot</h3>
-                    <div class="text-3xl font-bold text-red-400 mb-6">R$ 40,00</div>
-                    <ul class="text-sm text-gray-500 mb-8 text-center leading-relaxed">
-                        <li>Código fonte completo</li>
-                        <li>Guia de instalação</li>
-                        <li>Direito de modificação</li>
-                    </ul>
-                    <button onclick="sendOrder('Olá, Salvatore! Quero comprar os arquivos do bot')" class="btn-buy w-full py-3 rounded-xl text-white font-bold">Comprar Agora</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção 2: Compras Gerais -->
-        <section class="mb-16">
-            <div class="flex items-center mb-8 border-b-2 border-red-100 pb-2">
-                <span class="text-3xl mr-3">🛒</span>
-                <h2 class="text-2xl font-bold text-gray-700 uppercase tracking-wider">Compras Gerais</h2>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
+                <a href="#recursos" class="hover:text-white transition">Recursos</a>
+                <a href="#comandos" class="hover:text-white transition">Comandos</a>
+                <a href="#planos" class="hover:text-white transition">Planos</a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Números Virtuais BR -->
-                <div class="bg-white p-8 rounded-3xl shadow-md border-l-8 border-red-200">
-                    <h3 class="text-xl font-bold mb-4 flex items-center text-gray-800">
-                        <span class="mr-2 text-2xl">🇧🇷</span> Números Virtuais BR
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center p-4 bg-red-50 rounded-xl hover:bg-red-100 transition-colors cursor-pointer" onclick="sendOrder('Olá, Salvatore! Quero comprar um número ( aleatório )')">
-                            <div>
-                                <p class="font-semibold">Número Aleatório</p>
-                                <p class="text-xs text-gray-500">Qualquer DDD disponível</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-lg font-bold text-red-500">R$ 5,00</p>
-                                <span class="text-xs font-bold text-red-300">COMPRAR</span>
-                            </div>
-                        </div>
+            <a href="https://wa.me/559191772809" target="_blank" class="btn-primary px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wide flex items-center gap-2">
+                <i class="fab fa-whatsapp"></i> Suporte
+            </a>
+        </div>
+    </nav>
 
-                        <div class="flex justify-between items-center p-4 bg-red-50 rounded-xl hover:bg-red-100 transition-colors cursor-pointer" onclick="sendOrder('Olá, Salvatore! Quero comprar um número do DDD ( escolha o DDD )')">
-                            <div>
-                                <p class="font-semibold">Escolha de DDD</p>
-                                <p class="text-xs text-gray-500">Selecione o prefixo desejado</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-lg font-bold text-red-500">R$ 10,00</p>
-                                <span class="text-xs font-bold text-red-300">COMPRAR</span>
-                            </div>
-                        </div>
+    <!-- Hero Section -->
+    <section class="relative pt-40 pb-20 px-6 hero-gradient overflow-hidden">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <!-- Fukase Avatar -->
+            <div class="inline-block relative mb-10">
+                <div class="absolute inset-0 bg-red-600 blur-[60px] opacity-30 rounded-full"></div>
+                <img src="https://i.ibb.co/yFLnFV3k/a82e70a56baa.jpg" alt="Fukase Avatar" 
+                     class="w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-red-600 relative z-10 fukase-glow object-cover bg-zinc-900">
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+                A Inteligência que seu <br>
+                <span class="text-gradient uppercase">Grupo Merece.</span>
+            </h1>
+            
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+                Gerenciamento profissional, segurança impenetrável e o carisma do Fukase para transformar seu grupo de WhatsApp no mais completo do Brasil.
+            </p>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                <a href="#planos" class="btn-primary w-full md:w-auto px-10 py-4 rounded-xl font-bold text-lg shadow-lg shadow-red-900/20">
+                    Ver Planos
+                </a>
+                <a href="https://wa.me/559191772809" target="_blank" class="bg-white/5 hover:bg-white/10 w-full md:w-auto px-10 py-4 rounded-xl font-bold text-lg border border-white/10 transition flex items-center justify-center gap-2">
+                    Falar no Suporte
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-8 mt-24 max-w-3xl mx-auto">
+                <div>
+                    <div class="text-3xl font-black text-red-600">800+</div>
+                    <div class="text-sm text-gray-500 uppercase tracking-widest font-bold">Comandos</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-red-600">99.9%</div>
+                    <div class="text-sm text-gray-500 uppercase tracking-widest font-bold">Uptime</div>
+                </div>
+                <div class="col-span-2 md:col-span-1">
+                    <div class="text-3xl font-black text-red-600">24/7</div>
+                    <div class="text-sm text-gray-500 uppercase tracking-widest font-bold">Suporte</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recursos Section -->
+    <section id="recursos" class="py-24 px-6 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 uppercase italic">Recursos <span class="text-red-600 font-black">Premium.</span></h2>
+                <p class="text-gray-500">Tudo o que você precisa para manter seu grupo seguro e engajado.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                        <i class="fas fa-shield-halved text-2xl"></i>
                     </div>
+                    <h3 class="text-xl font-bold mb-3">Segurança Total</h3>
+                    <p class="text-gray-400 text-sm">Anti-link, anti-flood, anti-bot e monitoramento ativo para administradores suspeitos.</p>
                 </div>
 
-                <!-- Info Box -->
-                <div class="flex flex-col justify-center items-center text-center p-8 bg-white rounded-3xl shadow-sm border border-red-50">
-                    <div class="mb-4 text-yellow-400 text-3xl">⭐⭐⭐⭐⭐</div>
-                    <p class="text-gray-600 italic">"Serviço rápido e confiável, recomendo a todos!"</p>
-                    <p class="mt-4 font-bold text-red-400">— Cliente Satisfeito</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção 3: Detalhes do Bot (Nova Seção) -->
-        <section id="bot-details" class="mt-20 py-8">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-gray-800">ATUALIZADO ✅</h2>
-                <div class="w-24 h-1 bg-red-200 mx-auto mt-2"></div>
-            </div>
-
-            <div class="flex flex-col lg:flex-row items-center gap-12">
-                <!-- Imagem com Borda -->
-                <div class="w-full lg:w-1/2 bot-image-container shadow-2xl">
-                    <img src="https://i.ibb.co/vC7VLGqL/0b3b57a92c95.jpg" alt="Preview Bot Fukase" class="w-full h-auto block">
-                </div>
-
-                <!-- Legenda e Funcionalidades -->
-                <div class="w-full lg:w-1/2 space-y-6">
-                    <p class="text-gray-700 leading-relaxed text-lg">
-                        O <strong>Fukase</strong> está completamente atualizado e tem funções como:
-                    </p>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="flex items-center space-x-3 bg-white p-4 rounded-xl shadow-sm border border-red-50">
-                            <span class="text-2xl">👮🏻</span>
-                            <span class="font-medium">Administração</span>
-                        </div>
-                        <div class="flex items-center space-x-3 bg-white p-4 rounded-xl shadow-sm border border-red-50">
-                            <span class="text-2xl">🤹🏻</span>
-                            <span class="font-medium">Interação</span>
-                        </div>
-                        <div class="flex items-center space-x-3 bg-white p-4 rounded-xl shadow-sm border border-red-50">
-                            <span class="text-2xl">🖼️</span>
-                            <span class="font-medium">Faz figurinhas</span>
-                        </div>
-                        <div class="flex items-center space-x-3 bg-white p-4 rounded-xl shadow-sm border border-red-50">
-                            <span class="text-2xl">🍏</span>
-                            <span class="font-medium">Brat</span>
-                        </div>
-                        <div class="flex items-center space-x-3 bg-white p-4 rounded-xl shadow-sm border border-red-50">
-                            <span class="text-2xl">🪙</span>
-                            <span class="font-medium">Sistema de gold</span>
-                        </div>
-                        <div class="flex items-center space-x-3 bg-white p-4 rounded-xl shadow-sm border border-red-50">
-                            <span class="text-2xl">🎧</span>
-                            <span class="font-medium">Baixa músicas</span>
-                        </div>
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                        <i class="fas fa-gamepad text-2xl"></i>
                     </div>
+                    <h3 class="text-xl font-bold mb-3">RPG & Economia</h3>
+                    <p class="text-gray-400 text-sm">Sistema de lutas, profissões, mercado negro e cassino integrados diretamente ao chat.</p>
+                </div>
 
-                    <p class="text-gray-500 font-bold flex items-center">
-                        E muito mais! <span class="ml-2 text-2xl">🤩</span>
-                    </p>
-
-                    <!-- Estrelas -->
-                    <div class="flex items-center space-x-1 pt-4">
-                        <span class="text-gray-700 font-bold mr-2">Avaliação do Bot:</span>
-                        <span class="text-yellow-400 text-2xl">★★★★★</span>
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                        <i class="fas fa-robot text-2xl"></i>
                     </div>
+                    <h3 class="text-xl font-bold mb-3">IA Generativa</h3>
+                    <p class="text-gray-400 text-sm">Criação de imagens e diálogos com GPT-4 e Llama em segundos via comandos.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                        <i class="fas fa-search text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Consultas VIP</h3>
+                    <p class="text-gray-400 text-sm">Acesso a consultas de CPF, Nome, Placa e Score diretamente pelo bot.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                        <i class="fas fa-music text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Multimídia</h3>
+                    <p class="text-gray-400 text-sm">Download de músicas e vídeos do TikTok, Instagram e YouTube sem marca d'água.</p>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                        <i class="fas fa-bolt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Online 24h</h3>
+                    <p class="text-gray-400 text-sm">Fica online o dia todo, limpa cachê automaticamente para evitar pesar e deixar o sistema mais fluido.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-    </main>
+    <!-- Comandos Section -->
+    <section id="comandos" class="py-24 px-6 bg-[#050505]">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 uppercase italic">Biblioteca de <span class="text-red-600 font-black">Comandos.</span></h2>
+                <p class="text-gray-500">Explore o que o Fukase pode fazer pelo seu grupo.</p>
+            </div>
 
-    <!-- WhatsApp Flutuante -->
-    <a href="https://wa.me/559191772809" target="_blank" class="whatsapp-float" title="Fale conosco no WhatsApp">
-        <svg viewBox="0 0 32 32" class="w-8 h-8 fill-current">
-            <path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.39 0-.11-.243-.754-.42-1.213-.309-.794-.659-1.69-.813-1.69-.357 0-1.1.12-.11.12h-.008c-.33 0-.649.165-.838.452-.303.46-.864 1.567-.864 2.726 0 1.757.789 3.256 1.935 4.389 1.612 1.595 3.586 2.394 5.915 2.394 1.185 0 2.229-.616 2.748-1.025a1.446 1.446 0 0 0 .57-1.185c0-.582-1.173-1.135-1.677-1.135zM16 2a14 14 0 0 0-14 14c0 3.11 1.01 6.13 2.915 8.59L3 30l5.705-1.615A13.946 13.946 0 0 0 16 30a14 14 0 0 0 14-14A14 14 0 0 0 16 2zm0 26a11.917 11.917 0 0 1-6.425-1.855l-.46-.285-3.393.96.983-3.2-.31-.51A11.902 11.902 0 0 1 4 16c0-6.617 5.383-12 12-12s12 5.383 12 12-5.383 12-12 12z"></path>
-        </svg>
-    </a>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-red-600">
+                    <h4 class="text-red-600 font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-user-shield"></i> Administração
+                    </h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="font-mono text-gray-300">/ban</span>
+                            <span class="text-gray-500">Remove o usuário</span>
+                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="font-mono text-gray-300">/mute</span>
+                            <span class="text-gray-500">Silencia por tempo X</span>
+                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="font-mono text-gray-300">/promover</span>
+                            <span class="text-gray-500">Dá admin ao usuário</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="font-mono text-gray-300">/anti (tipo)</span>
+                            <span class="text-gray-500">Ativa proteções</span>
+                        </li>
+                    </ul>
+                </div>
 
-    <footer class="py-8 text-center text-gray-400 text-sm">
-        <p>&copy; 2026 RICK SHOP. Todos os direitos reservados.</p>
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-red-600">
+                    <h4 class="text-red-600 font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-database"></i> Consultas VIP
+                    </h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="font-mono text-gray-300">/cpf</span>
+                            <span class="text-gray-500">Consulta completa</span>
+                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="font-mono text-gray-300">/nome</span>
+                            <span class="text-gray-500">Busca por nome</span>
+                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="font-mono text-gray-300">/placa</span>
+                            <span class="text-gray-500">Dados de veículos</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="font-mono text-gray-300">/ip</span>
+                            <span class="text-gray-500">Geolocalização</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-red-600">
+                    <h4 class="text-red-600 font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-dice"></i> Jogos & RPG
+                    </h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="font-mono text-gray-300">/rpgon</span>
+                            <span class="text-gray-500">Cria seu perfil</span>
+                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="font-mono text-gray-300">/trabalhar</span>
+                            <span class="text-gray-500">Ganha moedas</span>
+                        </li>
+                        <li class="flex justify-between border-b border-white/5 pb-2">
+                            <span class="font-mono text-gray-300">/cassino</span>
+                            <span class="text-gray-500">Aposta moedas</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="font-mono text-gray-300">/forca</span>
+                            <span class="text-gray-500">Jogo clássico</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planos Section -->
+    <section id="planos" class="py-24 px-6 relative bg-black">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Escolha seu <span class="text-red-600 font-black">Plano.</span></h2>
+                <p class="text-gray-500">Seja para um grupo pequeno ou uma rede de comunidades.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 items-stretch">
+                <!-- Plano 1 -->
+                <div class="glass-card p-8 rounded-3xl flex flex-col animate-slide" style="animation-delay: 0.1s;">
+                    <h3 class="text-xl font-bold mb-2">Mensal</h3>
+                    <div class="text-4xl font-black mb-6">R$ 5 <span class="text-sm text-gray-500 font-normal">/mês</span></div>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> 1 Grupo</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Comandos de Admin</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Boas-vindas Custom</li>
+                        <li class="opacity-30"><i class="fas fa-times mr-2"></i> Consultas VIP</li>
+                    </ul>
+                    <a href="https://wa.me/559191772809" target="_blank" class="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-bold transition-all text-center">Selecionar</a>
+                </div>
+
+                <!-- Plano 2 -->
+                <div class="glass-card p-8 rounded-3xl flex flex-col relative border-2 border-red-600 scale-105 shadow-2xl shadow-red-600/10 animate-slide" style="animation-delay: 0.2s;">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-600 text-[10px] uppercase font-bold px-4 py-1 rounded-full">Melhor Custo</div>
+                    <h3 class="text-xl font-bold mb-2">Permanente</h3>
+                    <div class="text-4xl font-black mb-6">R$ 25 <span class="text-sm text-gray-500 font-normal">/único</span></div>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> 2 Grupos</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Proteção X9 Ativada</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> RPG & Economia</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Downloads Premium</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Sem expiração</li>
+                    </ul>
+                    <a href="https://wa.me/559191772809" target="_blank" class="w-full py-4 rounded-xl btn-primary font-bold shadow-lg shadow-red-900/30 transition-all text-center">Adquirir Agora</a>
+                </div>
+
+                <!-- Plano 3 -->
+                <div class="glass-card p-8 rounded-3xl flex flex-col animate-slide" style="animation-delay: 0.3s;">
+                    <h3 class="text-xl font-bold mb-2">Arquivo do Bot</h3>
+                    <div class="text-4xl font-black mb-6">R$ 40 <span class="text-sm text-gray-500 font-normal">/base</span></div>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Arquivo Completo (Source)</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Tutorial de Hospedagem</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Sem limites de grupos</li>
+                        <li><i class="fas fa-check text-red-600 mr-2"></i> Tenha seu próprio bot</li>
+                    </ul>
+                    <a href="https://wa.me/559191772809" target="_blank" class="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-bold transition-all text-center">Quero a Base</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-24 px-6 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-black mb-6">Pronto para usar o <span class="text-red-600">Fukase?</span></h2>
+            <p class="text-gray-400 mb-8">Junte-se a centenas de administradores que já automatizaram seus grupos.</p>
+            <a href="https://wa.me/559191772809" target="_blank" class="btn-primary px-12 py-4 rounded-xl font-black uppercase text-lg inline-block shadow-lg shadow-red-900/40">Falar com o Criador</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-white/5 bg-black px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
+            <div class="col-span-2">
+                <div class="flex items-center space-x-2 mb-6">
+                    <i class="fas fa-candy-cane lollipop-icon rotate-45"></i>
+                    <span class="text-xl font-extrabold uppercase tracking-tighter">Fukase<span class="text-red-600">Bot</span></span>
+                </div>
+                <p class="text-gray-500 text-sm max-w-sm mb-6">A melhor solução em bots para WhatsApp, focada em segurança, performance e o toque único do Fukase.</p>
+                <div class="flex space-x-4 text-xl">
+                    <a href="https://wa.me/9191772809" target="_blank" class="text-gray-500 hover:text-red-600 transition"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://t.me/+5548991286958" target="_blank" class="text-gray-500 hover:text-red-600 transition"><i class="fab fa-telegram"></i></a>
+                    <a href="https://www.instagram.com/_.cwalacy_?igsh=MWg5OG5mbTVwNGtzdw==" target="_blank" class="text-gray-500 hover:text-red-600 transition"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div>
+                <h5 class="font-bold mb-6 text-red-600 uppercase tracking-widest text-xs">Acesso Direto</h5>
+                <ul class="space-y-3 text-sm text-gray-500">
+                    <li><a href="https://wa.me/9191772809" target="_blank" class="hover:text-white transition">WhatsApp</a></li>
+                    <li><a href="#comandos" class="hover:text-white transition">Comandos</a></li>
+                    <li><a href="#planos" class="hover:text-white transition">Planos</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h5 class="font-bold mb-6 text-red-600 uppercase tracking-widest text-xs">Redes Sociais</h5>
+                <ul class="space-y-3 text-sm text-gray-500">
+                    <li><a href="https://wa.me/9191772809" target="_blank" class="hover:text-white transition">WhatsApp Suporte</a></li>
+                    <li><a href="https://t.me/+5548991286958" target="_blank" class="hover:text-white transition">Telegram</a></li>
+                    <li><a href="https://www.instagram.com/_.cwalacy_?igsh=MWg5OG5mbTVwNGtzdw==" target="_blank" class="hover:text-white transition">Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between text-xs text-gray-600 uppercase font-bold tracking-widest">
+            <p>&copy; 2024/2026 Fukase Bot. Todos os direitos reservados.</p>
+            <p>Design by AI</p>
+        </div>
     </footer>
 
     <script>
-        function sendOrder(message) {
-            // Número de telefone formatado
-            const phone = "559191772809";
-            // Formatar mensagem para URL
-            const encodedMsg = encodeURIComponent(message);
-            // Redirecionar para o WhatsApp
-            window.open(`https://wa.me/${phone}?text=${encodedMsg}`, '_blank');
-        }
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
     </script>
 </body>
 </html>
+
