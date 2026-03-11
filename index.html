@@ -10,9 +10,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
         :root {
-            --primary: #ff1a1a;
-            --secondary: #0a0a0a;
-            --accent: #1f1f1f;
+            --primary: #7b2cbf; /* Roxo vibrante */
+            --primary-dark: #240046; /* Roxo solicitado */
+            --secondary: #050010; /* Fundo escuro */
+            --accent: #3c096c;
         }
 
         body {
@@ -23,20 +24,20 @@
         }
 
         .hero-gradient {
-            background: radial-gradient(circle at 50% 50%, rgba(255, 26, 26, 0.15) 0%, rgba(10, 10, 10, 1) 70%);
+            background: radial-gradient(circle at 50% 50%, rgba(123, 44, 191, 0.15) 0%, rgba(5, 0, 16, 1) 70%);
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(123, 44, 191, 0.1);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .glass-card:hover {
             border-color: var(--primary);
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(255, 26, 26, 0.15);
+            box-shadow: 0 15px 40px rgba(123, 44, 191, 0.15);
         }
 
         .btn-primary {
@@ -49,24 +50,29 @@
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
-            box-shadow: 0 0 20px rgba(255, 26, 26, 0.4);
+            background-color: #9d4edd;
+            box-shadow: 0 0 20px rgba(123, 44, 191, 0.4);
         }
 
         .text-gradient {
-            background: linear-gradient(to right, #ffffff, #ff1a1a);
+            background: linear-gradient(to right, #ffffff, #9d4edd);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .fukase-glow {
-            filter: drop-shadow(0 0 20px rgba(255, 26, 26, 0.5));
+            filter: drop-shadow(0 0 20px rgba(123, 44, 191, 0.5));
         }
 
         .lollipop-icon {
             color: var(--primary);
-            filter: drop-shadow(0 0 8px rgba(255, 26, 26, 0.8));
+            filter: drop-shadow(0 0 8px rgba(123, 44, 191, 0.8));
             font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .lollipop-icon:hover {
+            transform: rotate(60deg) scale(1.2);
         }
 
         @keyframes slideFade {
@@ -79,19 +85,22 @@
         }
 
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: #050010; }
+        ::-webkit-scrollbar-thumb { background: #240046; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
     </style>
 </head>
 <body class="overflow-x-hidden">
 
-    <!-- Header -->
+    <!-- Navegação -->
     <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <i class="fas fa-candy-cane lollipop-icon rotate-45"></i>
-                <span class="text-xl font-extrabold tracking-tighter uppercase">Fukase<span class="text-red-600">Bot</span></span>
+                <!-- Link surpresa na bengala -->
+                <a href="https://youtube.com/@walacymodz?si=QK67YGcwfbqpj-Yw" target="_blank" title="Clique para uma surpresa!">
+                    <i class="fas fa-candy-cane lollipop-icon rotate-45"></i>
+                </a>
+                <span class="text-xl font-extrabold tracking-tighter uppercase">Fukase<span class="text-[#7b2cbf]">Bot</span></span>
             </div>
             
             <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
@@ -100,76 +109,82 @@
                 <a href="#planos" class="hover:text-white transition">Planos</a>
             </div>
 
-            <a href="https://wa.me/559191772809" target="_blank" class="btn-primary px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wide flex items-center gap-2">
+            <a href="https://wa.me/559191772809" target="_blank" class="btn-primary px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wide flex items-center gap-2 text-white">
                 <i class="fab fa-whatsapp"></i> Suporte
             </a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="relative pt-40 pb-20 px-6 hero-gradient overflow-hidden">
         <div class="max-w-5xl mx-auto text-center relative z-10">
             <div class="inline-block relative mb-10">
-                <div class="absolute inset-0 bg-red-600 blur-[60px] opacity-30 rounded-full"></div>
+                <div class="absolute inset-0 bg-[#7b2cbf] blur-[60px] opacity-30 rounded-full"></div>
                 <img src="https://i.ibb.co/yFLnFV3k/a82e70a56baa.jpg" alt="Fukase Avatar" 
-                     class="w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-red-600 relative z-10 fukase-glow object-cover bg-zinc-900">
+                     class="w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-[#7b2cbf] relative z-10 fukase-glow object-cover bg-zinc-900">
             </div>
 
             <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
-                O bot que seu <br>
-                <span class="text-gradient uppercase">Grupo Precisa.</span>
+                A Inteligência que seu <br>
+                <span class="text-gradient uppercase">Grupo Merece.</span>
             </h1>
             
             <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-                Sistema profissional e bem avaliado para um ótimo bot para seu grupo com suporte e sistemas super completos
+                Gerenciamento profissional, segurança impenetrável e o carisma do Fukase para transformar seu grupo de WhatsApp no mais completo do Brasil.
             </p>
 
-            <div class="flex flex-col md:flex-row items-center justify-center gap-4">
-                <a href="#planos" class="btn-primary w-full md:w-auto px-10 py-4 rounded-xl font-bold text-lg shadow-lg shadow-red-900/20">
-                    Ver Planos
-                </a>
-                <a href="https://wa.me/559191772809" target="_blank" class="bg-white/5 hover:bg-white/10 w-full md:w-auto px-10 py-4 rounded-xl font-bold text-lg border border-white/10 transition flex items-center justify-center gap-2">
-                    Falar no Suporte
+            <div class="flex flex-col items-center justify-center gap-4 max-w-lg mx-auto">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 w-full">
+                    <a href="#planos" class="btn-primary w-full md:w-1/2 px-10 py-4 rounded-xl font-bold text-lg shadow-lg shadow-purple-900/20 text-white">
+                        Ver Planos
+                    </a>
+                    <a href="https://wa.me/559191772809" target="_blank" class="bg-white/5 hover:bg-white/10 w-full md:w-1/2 px-10 py-4 rounded-xl font-bold text-lg border border-white/10 transition flex items-center justify-center gap-2">
+                        Falar no Suporte
+                    </a>
+                </div>
+                <!-- Novo botão de Comunidade -->
+                <a href="https://chat.whatsapp.com/FZsrJskimCm9xraDmqJMoT" target="_blank" class="w-full bg-[#240046] hover:bg-[#3c096c] px-10 py-4 rounded-xl font-bold text-lg border border-[#7b2cbf]/30 transition flex items-center justify-center gap-2 shadow-xl">
+                    <i class="fas fa-users"></i> Comunidade do Bot
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Recursos Section -->
-    <section id="recursos" class="py-24 px-6 bg-black">
+    <!-- Recursos -->
+    <section id="recursos" class="py-24 px-6 bg-[#050010]">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 uppercase italic">Recursos <span class="text-red-600 font-black">Premium.</span></h2>
-                <p class="text-gray-500"></p>
+                <h2 class="text-4xl font-bold mb-4 uppercase italic">Recursos <span class="text-[#7b2cbf] font-black">Premium.</span></h2>
+                <p class="text-gray-500">Tudo o que você precisa para manter seu grupo seguro e engajado.</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="glass-card p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                    <div class="w-12 h-12 bg-purple-600/20 text-[#7b2cbf] flex items-center justify-center rounded-xl mb-6">
                         <i class="fas fa-shield-halved text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Segurança Total</h3>
-                    <p class="text-gray-400 text-sm">Anti-link, Soadm, advlink e supervisão 24h para seu grupo longe de perigos.</p>
+                    <p class="text-gray-400 text-sm">Anti-link, anti-flood, anti-bot e monitoramento ativo para administradores suspeitos.</p>
                 </div>
 
                 <div class="glass-card p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                    <div class="w-12 h-12 bg-purple-600/20 text-[#7b2cbf] flex items-center justify-center rounded-xl mb-6">
                         <i class="fas fa-gamepad text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">RPG & Economia</h3>
-                    <p class="text-gray-400 text-sm">Sistema de mineração, cassino, forcas, ranks, leveling e muito mais!</p>
+                    <p class="text-gray-400 text-sm">Sistema de lutas, profissões, mercado negro e cassino integrados diretamente ao chat.</p>
                 </div>
 
                 <div class="glass-card p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                    <div class="w-12 h-12 bg-purple-600/20 text-[#7b2cbf] flex items-center justify-center rounded-xl mb-6">
                         <i class="fas fa-robot text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">IA Generativa</h3>
-                    <p class="text-gray-400 text-sm">Temos vários comandos como chatgpt e Gemini que são ias grandes.</p>
+                    <p class="text-gray-400 text-sm">Criação de imagens e diálogos com GPT-4 e Llama em segundos via comandos.</p>
                 </div>
 
                 <div class="glass-card p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                    <div class="w-12 h-12 bg-purple-600/20 text-[#7b2cbf] flex items-center justify-center rounded-xl mb-6">
                         <i class="fas fa-cloud-arrow-down text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Auto Downloads</h3>
@@ -177,7 +192,7 @@
                 </div>
 
                 <div class="glass-card p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                    <div class="w-12 h-12 bg-purple-600/20 text-[#7b2cbf] flex items-center justify-center rounded-xl mb-6">
                         <i class="fas fa-music text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Multimídia</h3>
@@ -185,7 +200,7 @@
                 </div>
 
                 <div class="glass-card p-8 rounded-2xl">
-                    <div class="w-12 h-12 bg-red-600/20 text-red-600 flex items-center justify-center rounded-xl mb-6">
+                    <div class="w-12 h-12 bg-purple-600/20 text-[#7b2cbf] flex items-center justify-center rounded-xl mb-6">
                         <i class="fas fa-bolt text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Online 24h</h3>
@@ -195,41 +210,41 @@
         </div>
     </section>
 
-    <!-- Comandos Section -->
-    <section id="comandos" class="py-24 px-6 bg-[#050505]">
+    <!-- Comandos -->
+    <section id="comandos" class="py-24 px-6 bg-[#0a0018]">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 uppercase italic">Biblioteca de <span class="text-red-600 font-black">Comandos.</span></h2>
+                <h2 class="text-4xl font-bold mb-4 uppercase italic">Biblioteca de <span class="text-[#7b2cbf] font-black">Comandos.</span></h2>
                 <p class="text-gray-500">Explore o que o Fukase pode fazer pelo seu grupo.</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-red-600">
-                    <h4 class="text-red-600 font-bold mb-4 flex items-center gap-2">
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-[#7b2cbf]">
+                    <h4 class="text-[#7b2cbf] font-bold mb-4 flex items-center gap-2">
                         <i class="fas fa-user-shield"></i> Administração
                     </h4>
                     <ul class="space-y-3 text-sm">
                         <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/ban</span><span class="text-gray-500">Remove usuário</span></li>
-                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/mute</span><span class="text-gray-500">Puni o usuário</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/mute</span><span class="text-gray-500">Silencia por tempo</span></li>
                         <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/promover</span><span class="text-gray-500">Dá admin</span></li>
-                        <li class="flex justify-between"><span class="font-mono text-gray-300">/adv</span><span class="text-gray-500">Adverte usuários</span></li>
+                        <li class="flex justify-between"><span class="font-mono text-gray-300">/anti (tipo)</span><span class="text-gray-500">Ativa proteções</span></li>
                     </ul>
                 </div>
 
-                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-red-600">
-                    <h4 class="text-red-600 font-bold mb-4 flex items-center gap-2">
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-[#7b2cbf]">
+                    <h4 class="text-[#7b2cbf] font-bold mb-4 flex items-center gap-2">
                         <i class="fas fa-download"></i> Auto Downloads
                     </h4>
                     <ul class="space-y-3 text-sm">
                         <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/play</span><span class="text-gray-500">Baixa músicas</span></li>
-                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/Instagram</span><span class="text-gray-500">Vídeos do Instagram</span></li>
+                        <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/ig</span><span class="text-gray-500">Posts do Instagram</span></li>
                         <li class="flex justify-between border-b border-white/5 pb-2"><span class="font-mono text-gray-300">/tiktok</span><span class="text-gray-500">Vídeos TikTok</span></li>
-                        <li class="flex justify-between"><span class="font-mono text-gray-300">/tiktokmp3</span><span class="text-gray-500">Áudio do TikTok</span></li>
+                        <li class="flex justify-between"><span class="font-mono text-gray-300">/ttaudi</span><span class="text-gray-500">Áudio do TikTok</span></li>
                     </ul>
                 </div>
 
-                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-red-600">
-                    <h4 class="text-red-600 font-bold mb-4 flex items-center gap-2">
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-[#7b2cbf]">
+                    <h4 class="text-[#7b2cbf] font-bold mb-4 flex items-center gap-2">
                         <i class="fas fa-dice"></i> Jogos & RPG
                     </h4>
                     <ul class="space-y-3 text-sm">
@@ -243,46 +258,49 @@
         </div>
     </section>
 
-    <!-- Planos Section -->
-    <section id="planos" class="py-24 px-6 bg-black">
+    <!-- Planos -->
+    <section id="planos" class="py-24 px-6 bg-[#050010]">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Escolha seu <span class="text-red-600 font-black">Plano.</span></h2>
+                <h2 class="text-4xl font-bold mb-4">Escolha seu <span class="text-[#7b2cbf] font-black">Plano.</span></h2>
                 <p class="text-gray-500">Seja para um grupo pequeno ou uma rede de comunidades.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 items-stretch">
-                <!-- Planos mantidos conforme solicitação anterior -->
+                <!-- Plano Mensal -->
                 <div class="glass-card p-8 rounded-3xl flex flex-col animate-slide" style="animation-delay: 0.1s;">
-                    <h3 class="text-xl font-bold mb-2">Mensal</h3>
+                    <h3 class="text-xl font-bold mb-2 text-white">Mensal</h3>
                     <div class="text-4xl font-black mb-6">R$ 5 <span class="text-sm text-gray-500 font-normal">/mês</span></div>
                     <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> 1 Grupo</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Comandos de Admin</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Suporte Prioritário</li>
+                        <li><i class="fas fa-check text-[#7b2cbf] mr-2"></i> 1 Grupo</li>
+                        <li><i class="fas fa-check text-[#7b2cbf] mr-2"></i> Comandos de Admin</li>
+                        <li><i class="fas fa-check text-[#7b2cbf] mr-2"></i> Suporte Prioritário</li>
                     </ul>
                     <a href="https://wa.me/559191772809" target="_blank" class="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-bold transition-all text-center">Selecionar</a>
                 </div>
 
-                <div class="glass-card p-8 rounded-3xl flex flex-col relative border-2 border-red-600 scale-105 shadow-2xl shadow-red-600/10 animate-slide" style="animation-delay: 0.2s;">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-600 text-[10px] uppercase font-bold px-4 py-1 rounded-full">Melhor Custo</div>
-                    <h3 class="text-xl font-bold mb-2">Permanente</h3>
+                <!-- Plano Permanente -->
+                <div class="glass-card p-8 rounded-3xl flex flex-col relative border-2 border-[#7b2cbf] scale-105 shadow-2xl shadow-purple-600/10 animate-slide" style="animation-delay: 0.2s;">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#7b2cbf] text-[10px] uppercase font-bold px-4 py-1 rounded-full text-white">Melhor Custo</div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Permanente</h3>
                     <div class="text-4xl font-black mb-6">R$ 25 <span class="text-sm text-gray-500 font-normal">/único</span></div>
                     <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> 1 Grupo</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Proteção X9 Ativada</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Sem expiração</li>
+                        <li><i class="fas fa-check text-[#7b2cbf] mr-2"></i> 1 Grupo</li>
+                        <li><i class="fas fa-check text-[#7b2cbf] mr-2"></i> Proteção X9 Ativada</li>
+                        <li><i class="fas fa-check text-[#7b2cbf] mr-2"></i> RPG & Economia</li>
+                        <li><i class="fas fa-check text-[#7b2cbf] mr-2"></i> Sem expiração</li>
                     </ul>
-                    <a href="https://wa.me/559191772809" target="_blank" class="w-full py-4 rounded-xl btn-primary font-bold shadow-lg shadow-red-900/30 transition-all text-center">Adquirir Agora</a>
+                    <a href="https://wa.me/559191772809" target="_blank" class="w-full py-4 rounded-xl btn-primary font-bold shadow-lg shadow-purple-900/30 transition-all text-center text-white">Adquirir Agora</a>
                 </div>
 
+                <!-- Plano Arquivo -->
                 <div class="glass-card p-8 rounded-3xl flex flex-col animate-slide" style="animation-delay: 0.3s;">
-                    <h3 class="text-xl font-bold mb-2">Arquivo do Bot</h3>
+                    <h3 class="text-xl font-bold mb-2 text-white">Arquivo do Bot</h3>
                     <div class="text-4xl font-black mb-6">R$ 40 <span class="text-sm text-gray-500 font-normal">/base</span></div>
                     <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Arquivo Completo</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Tutorial Hospedagem</li>
-                        <li><i class="fas fa-check text-red-600 mr-2"></i> Tenha seu próprio bot</li>
+                        <li><i class="fas fa-check text-[#7b2cbf] mr-2"></i> Arquivo Completo</li>
+                        <li><i class="fas fa-check text-[#7b2cbf] mr-2"></i> Tutorial Hospedagem</li>
+                        <li><i class="fas fa-check text-[#7b2cbf] mr-2"></i> Tenha seu próprio bot</li>
                     </ul>
                     <a href="https://wa.me/559191772809" target="_blank" class="w-full py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-bold transition-all text-center">Quero a Base</a>
                 </div>
@@ -291,23 +309,23 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 border-t border-white/5 bg-black px-6">
+    <footer class="py-12 border-t border-white/5 bg-[#050010] px-6">
         <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
             <div class="col-span-2">
                 <div class="flex items-center space-x-2 mb-6">
                     <i class="fas fa-candy-cane lollipop-icon rotate-45"></i>
-                    <span class="text-xl font-extrabold uppercase tracking-tighter">Fukase<span class="text-red-600">Bot</span></span>
+                    <span class="text-xl font-extrabold uppercase tracking-tighter">Fukase<span class="text-[#7b2cbf]">Bot</span></span>
                 </div>
                 <p class="text-gray-500 text-sm max-w-sm mb-6">A melhor solução em bots para WhatsApp, focada em segurança, performance e o toque único do Fukase.</p>
                 <div class="flex space-x-4 text-xl">
-                    <a href="https://wa.me/9191772809" target="_blank" class="text-gray-500 hover:text-red-600 transition"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://t.me/+5548991286958" target="_blank" class="text-gray-500 hover:text-red-600 transition"><i class="fab fa-telegram"></i></a>
-                    <a href="https://www.instagram.com/_.cwalacy_?igsh=MWg5OG5mbTVwNGtzdw==" target="_blank" class="text-gray-500 hover:text-red-600 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/9191772809" target="_blank" class="text-gray-500 hover:text-[#7b2cbf] transition"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://t.me/+5548991286958" target="_blank" class="text-gray-500 hover:text-[#7b2cbf] transition"><i class="fab fa-telegram"></i></a>
+                    <a href="https://www.instagram.com/_.cwalacy_?igsh=MWg5OG5mbTVwNGtzdw==" target="_blank" class="text-gray-500 hover:text-[#7b2cbf] transition"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             
             <div>
-                <h5 class="font-bold mb-6 text-red-600 uppercase tracking-widest text-xs">Acesso Direto</h5>
+                <h5 class="font-bold mb-6 text-[#7b2cbf] uppercase tracking-widest text-xs">Acesso Direto</h5>
                 <ul class="space-y-3 text-sm text-gray-500">
                     <li><a href="https://wa.me/9191772809" target="_blank" class="hover:text-white transition">WhatsApp</a></li>
                     <li><a href="#comandos" class="hover:text-white transition">Comandos</a></li>
@@ -316,7 +334,7 @@
             </div>
 
             <div>
-                <h5 class="font-bold mb-6 text-red-600 uppercase tracking-widest text-xs">Redes Sociais</h5>
+                <h5 class="font-bold mb-6 text-[#7b2cbf] uppercase tracking-widest text-xs">Redes Sociais</h5>
                 <ul class="space-y-3 text-sm text-gray-500">
                     <li><a href="https://wa.me/9191772809" target="_blank" class="hover:text-white transition">WhatsApp Suporte</a></li>
                     <li><a href="https://t.me/+5548991286958" target="_blank" class="hover:text-white transition">Telegram</a></li>
