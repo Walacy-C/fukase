@@ -1,246 +1,284 @@
-```react
-import React, { useState, useEffect } from 'react';
-import { Settings, CreditCard, Code, Cpu, Shield, Zap, LayoutGrid, X, ChevronRight, MessageSquare, CheckCircle2 } from 'lucide-react';
+```html
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COLUMBINA SHOP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
-const App = () => {
-  const [activeTab, setActiveTab] = useState('inicio');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
+        body {
+            background-color: #050505;
+            color: #d1d5db;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
 
-  // Componente para transição suave de abas
-  const TabContent = ({ id, children }) => {
-    return (
-      <div 
-        className={`transition-all duration-700 ease-out transform ${
-          activeTab === id 
-            ? 'opacity-100 translate-y-0 scale-100 relative z-10' 
-            : 'opacity-0 translate-y-4 scale-[0.98] absolute inset-0 pointer-events-none'
-        }`}
-      >
-        {children}
-      </div>
-    );
-  };
+        .bg-glow {
+            position: fixed;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: rgba(139, 92, 246, 0.1);
+            filter: blur(120px);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-  const Modal = ({ isOpen, onClose, title, children }) => {
-    if (!isOpen) return null;
-    return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-all">
-        <div className="bg-[#0f0f12] w-full max-w-md rounded-3xl border border-purple-500/20 p-8 shadow-2xl animate-in zoom-in-95 fade-in duration-300">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-purple-400 tracking-tight">{title}</h3>
-            <button onClick={onClose} className="text-gray-500 hover:text-white transition">
-              <X size={20} />
-            </button>
-          </div>
-          {/* Wrapper de animação para o conteúdo interno do modal */}
-          <div className="animate-in slide-in-from-bottom-4 duration-500 fill-mode-both">
-            {children}
-          </div>
-        </div>
-      </div>
-    );
-  };
+        .tab-content {
+            display: none;
+            animation: slideUp 0.6s ease forwards;
+        }
 
-  return (
-    <div className="min-h-screen bg-[#050505] text-gray-200 font-sans selection:bg-purple-500/30 overflow-x-hidden">
-      
-      {/* Background sutil */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-900/10 blur-[120px] rounded-full"></div>
-      </div>
+        .tab-content.active {
+            display: block;
+        }
 
-      {/* Botão de Menu Superior */}
-      <nav className="fixed top-0 w-full z-50 px-6 py-6 flex justify-between items-center max-w-7xl left-1/2 -translate-x-1/2">
-        <div className="text-sm font-black tracking-tighter text-white uppercase tracking-[0.2em]">C.Shop</div>
-        <button 
-          onClick={() => setIsMenuOpen(true)}
-          className="bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full flex items-center gap-2 transition-all active:scale-95 text-xs font-bold uppercase tracking-widest"
-        >
-          Menu <Settings size={14} className="text-purple-500" />
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .sidebar {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <!-- Barra de Navegação -->
+    <nav class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl z-50 px-6 py-6 flex justify-between items-center">
+        <div class="text-sm font-black tracking-[0.2em] text-white">C.SHOP</div>
+        <button onclick="toggleSidebar(true)" class="bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full flex items-center gap-2 transition-all active:scale-95 text-[10px] font-bold uppercase tracking-widest text-white">
+            Menu <i class="fas fa-cog text-purple-500"></i>
         </button>
-      </nav>
+    </nav>
 
-      {/* Sidebar / Drawer */}
-      <div className={`fixed inset-0 z-[60] transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsMenuOpen(false)}></div>
-        <div className={`absolute right-0 h-full w-full max-w-[300px] bg-[#0a0a0c] border-l border-white/5 p-10 transition-transform duration-500 ease-in-out ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-          <div className="flex justify-end mb-12">
-            <button onClick={() => setIsMenuOpen(false)} className="text-gray-400 hover:text-white"><X size={24} /></button>
-          </div>
-          <div className="space-y-3">
-            <button 
-              onClick={() => { setModalContent('aluguel'); setIsMenuOpen(false); }}
-              className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-purple-500/10 transition-all text-sm font-medium group"
-            >
-              <span>Infos de Aluguel</span>
-              <CreditCard size={16} className="text-purple-500 group-hover:scale-110 transition-transform" />
+    <!-- Menu Lateral (Sidebar) -->
+    <div id="sidebar-overlay" class="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-500"></div>
+    <aside id="sidebar" class="sidebar fixed right-0 top-0 h-full w-full max-w-[300px] bg-[#0a0a0c] border-l border-white/5 z-[70] p-10">
+        <div class="flex justify-end mb-12">
+            <button onclick="toggleSidebar(false)" class="text-gray-400 hover:text-white transition">
+                <i class="fas fa-times text-2xl"></i>
             </button>
-            <button 
-              onClick={() => { setModalContent('dev'); setIsMenuOpen(false); }}
-              className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-purple-500/10 transition-all text-sm font-medium group"
-            >
-              <span>Desenvolvedor</span>
-              <Code size={16} className="text-purple-500 group-hover:scale-110 transition-transform" />
-            </button>
-          </div>
         </div>
-      </div>
+        <div class="space-y-3">
+            <button onclick="openModal('modalAluguel')" class="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-purple-500/10 transition-all text-sm font-medium group">
+                <span>Infos de Aluguel</span>
+                <i class="fas fa-credit-card text-purple-500 group-hover:scale-110 transition-transform"></i>
+            </button>
+            <button onclick="openModal('modalDev')" class="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-purple-500/10 transition-all text-sm font-medium group">
+                <span>Desenvolvedor</span>
+                <i class="fas fa-code text-purple-500 group-hover:scale-110 transition-transform"></i>
+            </button>
+        </div>
+    </aside>
 
-      {/* Hero Section Centralizada */}
-      <main className="relative pt-32 pb-12 px-6 flex flex-col items-center max-w-5xl mx-auto">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-6">
-            <span className="w-1.5 h-1.5 bg-purple-500 rounded-full animate-pulse"></span>
-            Interface Otimizada
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4 italic">
-            COLUMBINA <span className="text-purple-500">SHOP</span>
-          </h1>
-          <p className="text-gray-500 text-sm md:text-base max-w-md mx-auto leading-relaxed font-light">
-            Sua central de automação premium. Estabilidade e funções exclusivas para o seu WhatsApp.
-          </p>
+    <!-- Conteúdo Principal -->
+    <main class="relative z-10 pt-32 pb-12 px-6 flex flex-col items-center max-w-5xl mx-auto">
+        
+        <header class="text-center mb-12">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-[10px] font-bold text-purple-400 uppercase tracking-widest mb-6">
+                <span class="w-1.5 h-1.5 bg-purple-500 rounded-full shadow-[0_0_8px_#8b5cf6]"></span>
+                Interface Estável
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4 italic">
+                COLUMBINA <span class="text-purple-500">SHOP</span>
+            </h1>
+            <p class="text-gray-500 text-sm md:text-base max-w-md mx-auto leading-relaxed font-light">
+                Automação premium para WhatsApp. Simplicidade, rapidez e segurança num só bot.
+            </p>
         </header>
 
-        {/* Seleção de Abas Estilo Pílula */}
-        <div className="flex bg-[#111114] p-1 rounded-2xl border border-white/5 mb-12">
-          {['inicio', 'recursos', 'termos'].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
-                activeTab === tab 
-                  ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/20' 
-                  : 'text-gray-500 hover:text-gray-300'
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
+        <!-- Seleção de Abas -->
+        <div class="flex bg-[#111114] p-1 rounded-2xl border border-white/5 mb-12">
+            <button onclick="switchTab(this, 'inicio')" class="tab-btn px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 bg-purple-600 text-white shadow-lg shadow-purple-900/20">Início</button>
+            <button onclick="switchTab(this, 'recursos')" class="tab-btn px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 text-gray-500 hover:text-gray-300">Recursos</button>
+            <button onclick="switchTab(this, 'termos')" class="tab-btn px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 text-gray-500 hover:text-gray-300">Termos</button>
         </div>
 
-        {/* Container de Conteúdo com Animação */}
-        <div className="w-full bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-2xl">
-          
-          <TabContent id="inicio">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-2xl font-bold text-white mb-4">A evolução do bot.</h2>
-                <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                  A Columbina Bot oferece uma interface de comandos intuitiva, rápida e focada na experiência do usuário final. Modere seus grupos com autoridade.
-                </p>
-                <div className="flex gap-4">
-                  <button className="bg-purple-600 hover:bg-purple-500 text-white px-6 py-3 rounded-xl text-xs font-bold transition-all flex items-center gap-2 group">
-                    ADQUIRIR AGORA <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
-                  <button className="border border-white/10 hover:bg-white/5 px-6 py-3 rounded-xl text-xs font-bold transition-all">
-                    COMANDOS
-                  </button>
-                </div>
-              </div>
-              <div className="flex justify-center">
-                <div className="w-48 h-48 bg-gradient-to-tr from-purple-900/20 to-purple-600/10 rounded-3xl border border-purple-500/20 flex items-center justify-center relative group">
-                  <div className="absolute inset-0 blur-2xl bg-purple-500/10 group-hover:bg-purple-500/20 transition-all"></div>
-                  <MessageSquare size={64} className="text-purple-500 relative z-10" />
-                </div>
-              </div>
-            </div>
-          </TabContent>
-
-          <TabContent id="recursos">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { icon: Shield, t: "Segurança", d: "Anti-link e banimento automático." },
-                { icon: Zap, t: "Performance", d: "Sem delay nas respostas." },
-                { icon: LayoutGrid, t: "Completo", d: "Mais de 200 comandos ativos." }
-              ].map((r, i) => (
-                <div key={i} className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-purple-500/30 transition-all group">
-                  <r.icon size={24} className="text-purple-500 mb-4 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-lg font-bold text-white mb-2">{r.t}</h3>
-                  <p className="text-xs text-gray-500 leading-relaxed">{r.d}</p>
-                </div>
-              ))}
-            </div>
-          </TabContent>
-
-          <TabContent id="termos">
-            <div className="max-w-2xl mx-auto text-center py-8">
-              <h2 className="text-xl font-bold text-white mb-4">Termos de Uso</h2>
-              <p className="text-sm text-gray-500 leading-relaxed italic">
-                Ao utilizar o Columbina Shop, você concorda com nossas políticas de privacidade. Não toleramos o uso do bot para fins ilícitos ou spam excessivo que comprometa nossos servidores.
-              </p>
-            </div>
-          </TabContent>
-
-        </div>
-
-        {/* Modais de Informação */}
-        <Modal 
-          isOpen={modalContent === 'aluguel'} 
-          onClose={() => setModalContent(null)}
-          title="Planos de Aluguel"
-        >
-          <div className="space-y-3 text-sm">
-            <p className="text-gray-500 text-xs mb-4">Escolha o plano que melhor se adapta ao seu grupo:</p>
+        <!-- Container das Abas -->
+        <section class="w-full bg-white/[0.02] border border-white/5 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-2xl">
             
-            <div className="group flex justify-between items-center p-4 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-purple-500/30 hover:bg-purple-500/5 transition-all">
-              <div className="flex items-center gap-3">
-                <CheckCircle2 size={16} className="text-purple-500 opacity-50" />
-                <span className="font-medium text-gray-300">Mensal</span>
-              </div>
-              <span className="text-purple-400 font-bold">R$ 5,00</span>
+            <div id="inicio" class="tab-content active">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white mb-4">Eficiência Máxima.</h2>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            A Columbina Bot foi desenhada para grupos que não podem parar. Gestão de membros, filtros inteligentes e diversão garantida.
+                        </p>
+                        <div class="flex gap-4">
+                            <button class="bg-purple-600 hover:bg-purple-500 text-white px-6 py-3 rounded-xl text-xs font-bold transition-all flex items-center gap-2 group">
+                                ADQUIRIR <i class="fas fa-chevron-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                            <button class="border border-white/10 hover:bg-white/5 px-6 py-3 rounded-xl text-xs font-bold transition-all text-white">
+                                COMANDOS
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="w-40 h-40 bg-gradient-to-tr from-purple-900/20 to-purple-600/10 rounded-3xl border border-purple-500/20 flex items-center justify-center relative group">
+                            <i class="fas fa-robot text-5xl text-purple-500 relative z-10 group-hover:scale-110 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div className="group flex justify-between items-center p-4 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-purple-500/30 hover:bg-purple-500/5 transition-all">
-              <div className="flex items-center gap-3">
-                <CheckCircle2 size={16} className="text-purple-500 opacity-50" />
-                <span className="font-medium text-gray-300">Bimestral</span>
-              </div>
-              <span className="text-purple-400 font-bold">R$ 10,00</span>
+            <div id="recursos" class="tab-content">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-purple-500/30 transition-all">
+                        <i class="fas fa-shield-alt text-purple-500 text-xl mb-4"></i>
+                        <h3 class="text-lg font-bold text-white mb-2">Segurança</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">Anti-link e banimento automático configurável.</p>
+                    </div>
+                    <div class="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-purple-500/30 transition-all">
+                        <i class="fas fa-bolt text-purple-500 text-xl mb-4"></i>
+                        <h3 class="text-lg font-bold text-white mb-2">Velocidade</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">Resposta instantânea em todos os servidores.</p>
+                    </div>
+                    <div class="p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-purple-500/30 transition-all">
+                        <i class="fas fa-th-large text-purple-500 text-xl mb-4"></i>
+                        <h3 class="text-lg font-bold text-white mb-2">Completo</h3>
+                        <p class="text-xs text-gray-500 leading-relaxed">Sistema de economia, jogos e ferramentas.</p>
+                    </div>
+                </div>
             </div>
 
-            <div className="group flex justify-between items-center p-4 bg-purple-500/10 rounded-2xl border border-purple-500/20 hover:border-purple-500/40 transition-all relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-purple-500 text-[8px] px-2 py-1 rounded-bl-lg font-black uppercase tracking-tighter text-white">Popular</div>
-              <div className="flex items-center gap-3">
-                <CheckCircle2 size={16} className="text-purple-500" />
-                <span className="font-bold text-white">Trimensal</span>
-              </div>
-              <span className="text-purple-400 font-black">R$ 15,00</span>
+            <div id="termos" class="tab-content">
+                <div class="max-w-2xl mx-auto text-center py-8">
+                    <h2 class="text-xl font-bold text-white mb-4">Política de Uso</h2>
+                    <p class="text-sm text-gray-500 leading-relaxed italic">
+                        Ao usar a Columbina, respeite os limites do WhatsApp. O abuso da ferramenta pode levar à suspensão do serviço no seu grupo.
+                    </p>
+                </div>
             </div>
 
-            <div className="mt-6 p-4 rounded-xl bg-purple-500/5 border border-purple-500/10 text-center">
-              <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] mb-1">Pagamento Facilitado</p>
-              <p className="text-xs text-purple-300 font-medium">Aceitamos PIX com ativação automática</p>
-            </div>
-          </div>
-        </Modal>
+        </section>
 
-        <Modal 
-          isOpen={modalContent === 'dev'} 
-          onClose={() => setModalContent(null)}
-          title="O Desenvolvedor"
-        >
-          <div className="text-center">
-             <div className="w-16 h-16 bg-purple-600/20 rounded-full mx-auto mb-4 flex items-center justify-center border border-purple-500/30 shadow-lg">
-                <Code size={28} className="text-purple-400" />
-             </div>
-             <p className="text-white font-bold mb-2">Columbina Systems</p>
-             <p className="text-xs text-gray-500 mb-6 italic leading-relaxed">Desenvolvido por profissionais dedicados à segurança e automação no ecossistema do WhatsApp.</p>
-             <div className="flex justify-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-purple-400 transition-colors"><Cpu size={14}/></div>
-                <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-purple-400 transition-colors"><Shield size={14}/></div>
-             </div>
-          </div>
-        </Modal>
-
-        <footer className="mt-16 text-[10px] text-gray-600 font-medium tracking-[0.3em] uppercase">
-          Columbina Shop &copy; 2026
+        <footer class="mt-16 text-[10px] text-gray-600 font-medium tracking-[0.3em] uppercase">
+            Columbina Shop &copy; 2026
         </footer>
-      </main>
-    </div>
-  );
-};
+    </main>
 
-export default App;
+    <!-- Modais -->
+    <div id="modalAluguel" class="modal" onclick="closeModalOnDim(event, 'modalAluguel')">
+        <div class="modal-content bg-[#0f0f12] w-full max-w-md rounded-3xl border border-purple-500/20 p-8 shadow-2xl mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-purple-400 tracking-tight">Planos de Aluguel</h3>
+                <button onclick="closeModal('modalAluguel')" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center p-4 bg-white/[0.03] rounded-2xl border border-white/5">
+                    <span class="text-sm font-medium">Plano Mensal</span>
+                    <span class="text-purple-400 font-bold">R$ 5,00</span>
+                </div>
+                <div class="flex justify-between items-center p-4 bg-white/[0.03] rounded-2xl border border-white/5">
+                    <span class="text-sm font-medium">Plano Bimestral</span>
+                    <span class="text-purple-400 font-bold">R$ 10,00</span>
+                </div>
+                <div class="flex justify-between items-center p-4 bg-purple-500/10 rounded-2xl border border-purple-500/30 relative">
+                    <span class="text-sm font-bold text-white">Plano Trimensal</span>
+                    <span class="text-purple-400 font-black">R$ 15,00</span>
+                    <span class="absolute -top-2 -right-2 bg-purple-500 text-[8px] px-2 py-0.5 rounded-full font-black text-white">POPULAR</span>
+                </div>
+                <div class="mt-6 p-4 rounded-xl bg-purple-500/5 border border-purple-500/10 text-center">
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Pagamento via PIX</p>
+                    <p class="text-xs text-purple-300">Ativação imediata após envio</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDev" class="modal" onclick="closeModalOnDim(event, 'modalDev')">
+        <div class="modal-content bg-[#0f0f12] w-full max-w-md rounded-3xl border border-purple-500/20 p-8 shadow-2xl mx-4 text-center">
+            <div class="w-16 h-16 bg-purple-600/20 rounded-full mx-auto mb-4 flex items-center justify-center border border-purple-500/30">
+                <i class="fas fa-code text-2xl text-purple-400"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Columbina Systems</h3>
+            <p class="text-xs text-gray-500 leading-relaxed mb-6 italic">Focados em criar a melhor experiência de automação para a comunidade lusófona.</p>
+            <button onclick="closeModal('modalDev')" class="w-full py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-xs font-bold uppercase tracking-widest text-white">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar(open) {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (open) {
+                sidebar.classList.add('active');
+                overlay.classList.add('opacity-100');
+                overlay.classList.remove('pointer-events-none');
+            } else {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('pointer-events-none');
+            }
+        }
+
+        function switchTab(btn, tabId) {
+            // Atualizar botões
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('bg-purple-600', 'text-white', 'shadow-lg', 'shadow-purple-900/20');
+                b.classList.add('text-gray-500', 'hover:text-gray-300');
+            });
+            btn.classList.add('bg-purple-600', 'text-white', 'shadow-lg', 'shadow-purple-900/20');
+            btn.classList.remove('text-gray-500', 'hover:text-gray-300');
+
+            // Atualizar conteúdo
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+            toggleSidebar(false);
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function closeModalOnDim(e, id) {
+            if (e.target.id === id) closeModal(id);
+        }
+
+        // Fechar sidebar ao clicar no overlay
+        document.getElementById('sidebar-overlay').onclick = () => toggleSidebar(false);
+    </script>
+</body>
+</html>
 
 ```
